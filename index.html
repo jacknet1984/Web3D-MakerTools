@@ -4,14 +4,14 @@
 <style>
 /* Layout: comandi a sinistra, anteprima a destra (sopra su telefono) */
 :root{
-  --bg:#f3f1ee; --panel:#ffffff; --ink:#1f2328; --muted:#626a73; --line:#dcd8d2; --stage:#e7e3dd;
-  --accent:#e8590c; --accent-ink:#ffffff; --field:#f7f5f2; --warn:#a15c00; --ok:#2d6a3e;
+  --bg:#f4f3fb; --panel:#ffffff; --ink:#1b1b2f; --muted:#646480; --line:#e3e1f2; --stage:#ebe9f7;
+  --accent:#6d5dfc; --accent2:#c45bff; --accent-ink:#ffffff; --field:#f6f5fd; --warn:#b45309; --ok:#15803d; --shadow:0 10px 30px -12px rgba(60,40,160,.25); --glow:radial-gradient(900px 420px at 85% -10%,rgba(109,93,252,.18),transparent 60%),radial-gradient(700px 380px at -5% 0%,rgba(196,91,255,.12),transparent 60%);
   --font:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#121417; --panel:#1b1e23; --ink:#ecebe8; --muted:#9aa1a9; --line:#2d3239; --stage:#0d0f12; --field:#23272d; --warn:#e0a04a; --ok:#6cc08a; color-scheme:dark;}}
+  --bg:#0b0d16; --panel:#141726; --ink:#eceaf8; --muted:#9a9cc0; --line:#262a42; --stage:#080a12; --field:#1b1f33; --warn:#fbbf6a; --ok:#6ee7a3; --accent:#8b7bff; --accent2:#d27bff; --shadow:0 12px 34px -14px rgba(0,0,0,.7); --glow:radial-gradient(900px 420px at 85% -10%,rgba(139,123,255,.20),transparent 60%),radial-gradient(700px 380px at -5% 0%,rgba(210,123,255,.12),transparent 60%); color-scheme:dark;}}
 :root[data-theme="dark"]{
-  --bg:#121417; --panel:#1b1e23; --ink:#ecebe8; --muted:#9aa1a9; --line:#2d3239; --stage:#0d0f12; --field:#23272d; --warn:#e0a04a; --ok:#6cc08a; color-scheme:dark;}
+  --bg:#0b0d16; --panel:#141726; --ink:#eceaf8; --muted:#9a9cc0; --line:#262a42; --stage:#080a12; --field:#1b1f33; --warn:#fbbf6a; --ok:#6ee7a3; --accent:#8b7bff; --accent2:#d27bff; --shadow:0 12px 34px -14px rgba(0,0,0,.7); --glow:radial-gradient(900px 420px at 85% -10%,rgba(139,123,255,.20),transparent 60%),radial-gradient(700px 380px at -5% 0%,rgba(210,123,255,.12),transparent 60%); color-scheme:dark;}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--font);margin:0;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 40px}
@@ -63,6 +63,10 @@ input[type=color]{width:100%;height:38px;border:1px solid var(--line);border-rad
 button.sw{width:42px;height:34px;border:1px solid var(--line);border-radius:10px;cursor:pointer;padding:0}
 .hrow.hv{background:color-mix(in srgb,var(--accent) 14%,transparent);border-radius:10px}
 .hrow.hl{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.icg{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.icg button{aspect-ratio:1;border:1px solid var(--line);background:var(--field);border-radius:8px;cursor:pointer;padding:3px}
+.icg button[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:1px}
+.icg canvas{width:100%;height:100%;display:block}
 .hrow{position:relative}
 .rm{position:absolute;right:2px;top:2px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;padding:0 4px}
 #selPanel[hidden]{display:none}
@@ -77,6 +81,36 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
 .pal button{aspect-ratio:1;border:1px solid var(--line);border-radius:8px;cursor:pointer;padding:0}
 #hueList{display:flex;flex-direction:column;gap:8px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ---- look moderno ---- */
+body{background:var(--glow),var(--bg);background-attachment:fixed;font-feature-settings:'ss01'}
+h1{font-size:28px;font-weight:700;letter-spacing:-.025em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:14.5px}
+.lang{border-radius:999px;padding:3px;background:var(--panel);box-shadow:var(--shadow);gap:2px}
+.lang button{border-radius:999px;background:transparent;padding:6px 13px}
+.tabs{gap:6px;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);width:fit-content;max-width:100%}
+.tabs button{border:0;background:transparent;color:var(--muted);padding:9px 16px;border-radius:13px;transition:background .15s,color .15s}
+.tabs button:hover{color:var(--ink);background:var(--field)}
+.tabs button[aria-selected=true]{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 6px 16px -6px var(--accent)}
+.card{border-radius:20px;box-shadow:var(--shadow);padding:18px}
+.card h2{color:var(--accent);letter-spacing:.12em}
+input[type=text],select{border-radius:12px;transition:border-color .15s,box-shadow .15s}
+input[type=text]:focus,select:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.seg{border-radius:12px;padding:3px;gap:3px;background:var(--field);border:1px solid var(--line)}
+.seg button{background:transparent;border-radius:9px;color:var(--muted);transition:background .15s,color .15s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed=true]{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 12px -5px var(--accent)}
+.btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:14px;box-shadow:0 10px 22px -10px var(--accent);transition:transform .12s,box-shadow .15s,filter .15s}
+.btn:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.06)}
+.btn.alt{background:var(--field);color:var(--ink);box-shadow:none;border:1px solid var(--line)}
+.btn.alt:hover:not(:disabled){border-color:var(--accent)}
+.stage{border-radius:18px;background:var(--stage)}
+.chip{background:var(--field);border-radius:999px}
+.icg button{border-radius:10px;transition:transform .1s,border-color .15s}
+.icg button:hover{transform:scale(1.07);border-color:var(--accent)}
+.icg button[aria-pressed=true]{outline:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 16%,var(--field))}
+input[type=range]{height:22px}
+.lang button[aria-pressed=true]{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
 </style>
 <div class="wrap">
   <header>
@@ -100,6 +134,8 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
 
       <div class="sec on" id="secText">
         <label for="txt"><span data-i="text"></span><input id="txt" type="text" value="MARCO" maxlength="24"></label>
+        <label class="chk"><input type="checkbox" id="cTwo"><span data-i="twoLines"></span></label>
+        <label for="txt2" id="lTxt2" hidden><span data-i="text2"></span><input id="txt2" type="text" value="" maxlength="24"></label>
         <label for="font"><span data-i="font"></span>
           <select id="font">
             <option value="Bebas Neue|400">Bebas Neue</option>
@@ -114,6 +150,11 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
           </select>
         </label>
         <div class="btns"><button class="btn alt mini" id="bFont" data-i="ownFont"></button><input type="file" id="fFont" accept=".ttf,.otf,.woff,.woff2" hidden></div>
+        <div><div class="hint" style="margin-bottom:5px" data-i="iconLabel"></div><div id="iconGrid"></div>
+          <div class="seg" id="iconPos" style="margin-top:8px"><button aria-pressed="true" data-v="none" data-i="icNone"></button><button aria-pressed="false" data-v="left" data-i="icLeft"></button><button aria-pressed="false" data-v="right" data-i="icRight"></button><button aria-pressed="false" data-v="both" data-i="icBoth"></button></div></div>
+        <label for="icScale" id="lIcScale"><span data-i="icSize"></span><output id="oIc"></output><input id="icScale" type="range" min="50" max="150" step="5" value="100"></label>
+        <label class="chk"><input type="checkbox" id="cFit"><span data-i="fitLabel"></span></label>
+        <label for="fitW" id="lFit" hidden><span data-i="fitWidth"></span><output id="oFit"></output><input id="fitW" type="range" min="20" max="150" step="1" value="60"></label>
         <label for="size"><span data-i="fontSize"></span><output id="oSize"></output><input id="size" type="range" min="8" max="40" value="16"></label>
         <label for="pad"><span data-i="padding"></span><output id="oPad"></output><input id="pad" type="range" min="2" max="12" step="0.5" value="5"></label>
         <div><div class="hint" style="margin-bottom:5px" data-i="shape"></div>
@@ -144,7 +185,20 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
       </div>
 
       <div class="sec" id="secLit">
-        <div><div class="hint" style="margin-bottom:5px" data-i="litShapeL"></div>
+        <label for="litForm"><span data-i="litFormL"></span><select id="litForm"><option value="plate" data-i="fPlate"></option><option value="circle" data-i="fCircle"></option><option value="star" data-i="fStar"></option><option value="heart" data-i="fHeart"></option><option value="hex" data-i="fHex"></option><option value="cyl" data-i="fCyl"></option></select></label>
+        <label class="chk" id="litFitRow" style="display:none"><input type="checkbox" id="litFit"><span data-i="litFit"></span></label>
+        <div id="zoomBox" style="display:none">
+          <label for="litZoom"><span data-i="litZoom"></span><output id="oLZ"></output><input id="litZoom" type="range" min="50" max="300" step="5" value="100"></label>
+          <div class="row2">
+            <label for="litPanX"><span data-i="litPanX"></span><output id="oLX"></output><input id="litPanX" type="range" min="-50" max="50" step="1" value="0"></label>
+            <label for="litPanY"><span data-i="litPanY"></span><output id="oLY"></output><input id="litPanY" type="range" min="-50" max="50" step="1" value="0"></label>
+          </div>
+        </div>
+        <div id="cylBox" hidden><div class="row2">
+          <label for="cylD"><span data-i="cylD"></span><output id="oCD"></output><input id="cylD" type="range" min="40" max="120" step="1" value="70"></label>
+          <label for="cylH"><span data-i="cylH"></span><output id="oCH"></output><input id="cylH" type="range" min="30" max="150" step="1" value="80"></label>
+        </div><p class="hint" data-i="cylHint"></p></div>
+        <div id="litShapeBox"><div class="hint" style="margin-bottom:5px" data-i="litShapeL"></div>
           <div class="seg" id="litShape"><button aria-pressed="true" data-v="cut" data-i="litCut"></button><button aria-pressed="false" data-v="rect" data-i="litRect"></button></div></div>
         <div class="row2">
           <label for="tmin"><span data-i="tmin"></span><output id="oTmin"></output><input id="tmin" type="range" min="0.4" max="2" step="0.1" value="0.8"></label>
@@ -157,6 +211,20 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
           <select id="litPitch"><option value="0.4" data-i="pFast"></option><option value="0.3" data-i="pNorm" selected></option><option value="0.2" data-i="pHigh"></option></select></label>
         <div><div class="hint" style="margin-bottom:5px" data-i="litViewL"></div>
           <div class="seg" id="litView"><button aria-pressed="true" data-v="back" data-i="viewBack"></button><button aria-pressed="false" data-v="3d" data-i="view3d"></button></div></div>
+        <div id="litBoxRow"><label class="chk"><input type="checkbox" id="litBox" checked><span data-i="litBox"></span></label></div>
+        <p class="hint" id="boxNote" data-i="litBoxNote"></p>
+        <div id="boxOpt">
+          <div class="row2">
+            <label for="boxWall"><span data-i="boxWall"></span><output id="oBW"></output><input id="boxWall" type="range" min="1.2" max="4" step="0.4" value="2.4"></label>
+            <label for="boxLip"><span data-i="boxLip"></span><output id="oBLp"></output><input id="boxLip" type="range" min="1" max="8" step="0.5" value="3"></label>
+          </div>
+          <div class="row2">
+            <label for="boxClr"><span data-i="boxClr"></span><output id="oBC"></output><input id="boxClr" type="range" min="0.2" max="0.8" step="0.1" value="0.4"></label>
+            <label for="boxDepth"><span data-i="boxDepth"></span><output id="oBD"></output><input id="boxDepth" type="range" min="0" max="60" step="5" value="25"></label>
+          </div>
+          <label class="chk"><input type="checkbox" id="boxBack" checked><span data-i="boxBack"></span></label>
+          <label class="chk" id="lCable"><input type="checkbox" id="boxCable" checked><span data-i="boxCable"></span></label>
+        </div>
         <p class="hint" data-i="litHint"></p>
       </div>
 
@@ -175,6 +243,7 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
       </div>
 
       <div class="sec on" id="secCommon">
+        <label for="smooth"><span data-i="smooth"></span><output id="oSm"></output><input id="smooth" type="range" min="0" max="5" step="1" value="2"></label>
         <div><div class="hint" style="margin-bottom:5px" data-i="holeLabel"></div>
           <div class="seg" id="hole"><button aria-pressed="true" data-v="left" data-i="hLeft"></button><button aria-pressed="false" data-v="top" data-i="hTop"></button><button aria-pressed="false" data-v="none" data-i="hNone"></button></div></div>
         <div id="boxHoleD"><label for="holeD"><span data-i="holeD"></span><output id="oHD"></output><input id="holeD" type="range" min="3" max="8" step="0.5" value="4.5"></label></div>
@@ -230,6 +299,25 @@ const norm=(a)=>{const l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2
     return new Uint8Array(buf);
   }
 
+  function model3MFObjects(parts, offs) { // ogni pezzo e' un oggetto separato (selezionabile) nello stesso file
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const mats = parts.map((p) => '<base name="' + esc(p.name) + '" displaycolor="' + p.color.toUpperCase() + 'FF"/>').join('');
+    let objs = '', items = '', cfgO = '';
+    parts.forEach((p, k) => {
+      const id = 3 + k, o = offs[k], X = [], Tr = [];
+      for (let i = 0; i < p.V.length; i += 3) X.push('<vertex x="' + (p.V[i] + o[0]).toFixed(4) + '" y="' + (p.V[i + 1] + o[1]).toFixed(4) + '" z="' + (p.V[i + 2] + o[2]).toFixed(4) + '"/>');
+      for (let i = 0; i < p.I.length; i += 3) Tr.push('<triangle v1="' + p.I[i] + '" v2="' + p.I[i + 1] + '" v3="' + p.I[i + 2] + '" pid="2" p1="' + k + '"/>');
+      objs += '<object id="' + id + '" name="' + esc(p.name) + '" type="model" pid="2" pindex="' + k + '"><mesh>\n<vertices>\n' + X.join('\n') + '\n</vertices>\n<triangles>\n' + Tr.join('\n') + '\n</triangles>\n</mesh></object>\n';
+      items += '<item objectid="' + id + '"/>';
+      cfgO += '<object id="' + id + '" instances_count="1"><metadata type="object" key="name" value="' + esc(p.name) + '"/><metadata type="object" key="extruder" value="' + p.extruder + '"/>\n<volume firstid="0" lastid="' + (p.I.length / 3 - 1) + '"><metadata type="volume" key="name" value="' + esc(p.name) + '"/><metadata type="volume" key="volume_type" value="ModelPart"/><metadata type="volume" key="extruder" value="' + p.extruder + '"/></volume>\n</object>\n';
+    });
+    const modelXml = '<?xml version="1.0" encoding="UTF-8"?>\n<model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">\n<metadata name="Application">Keychain Maker</metadata>\n<resources>\n<basematerials id="2">' + mats + '</basematerials>\n' + objs + '</resources>\n<build>' + items + '</build>\n</model>';
+    const cfg = '<?xml version="1.0" encoding="UTF-8"?>\n<config>\n' + cfgO + '</config>';
+    const ct = '<?xml version="1.0" encoding="UTF-8"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml"/><Default Extension="config" ContentType="text/xml"/></Types>';
+    const rels = '<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Target="/3D/3dmodel.model" Id="rel0" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/></Relationships>';
+    const te = new TextEncoder();
+    return [{ name: '[Content_Types].xml', data: te.encode(ct) }, { name: '_rels/.rels', data: te.encode(rels) }, { name: '3D/3dmodel.model', data: te.encode(modelXml) }, { name: 'Metadata/Slic3r_PE_model.config', data: te.encode(cfg) }];
+  }
   function model3MF(parts, off) {
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     const X = [], Tr = []; let vbase = 0; const ranges = []; let tbase = 0;
@@ -422,9 +510,21 @@ function simplifyRing(r, eps) {
 const areaOf = (r) => { let a = 0; for (let i = 0; i < r.length; i++) { const p = r[i], q = r[(i + 1) % r.length]; a += p[0] * q[1] - q[0] * p[1]; } return a / 2; };
 function inside(pt, r) { let c = false; const x = pt[0], y = pt[1]; for (let i = 0, j = r.length - 1; i < r.length; j = i++) if ((r[i][1] > y) !== (r[j][1] > y) && x < (r[j][0] - r[i][0]) * (y - r[i][1]) / (r[j][1] - r[i][1]) + r[i][0]) c = !c; return c; }
 
+let SMOOTH_PASSES = 8;
+function resampleRing(r, step) {
+  const n = r.length, cum = [0]; for (let i = 0; i < n; i++) { const a = r[i], b = r[(i + 1) % n]; cum.push(cum[i] + Math.hypot(b[0] - a[0], b[1] - a[1])); }
+  const L = cum[n], m = Math.max(8, Math.round(L / step)), ds = L / m, out = []; let s = 0;
+  for (let k = 0; k < m; k++) { const t = k * ds; while (s < n - 1 && cum[s + 1] < t) s++; const a = r[s], b = r[(s + 1) % n], len = cum[s + 1] - cum[s] || 1, f = (t - cum[s]) / len; out.push([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]); }
+  return out;
+}
+function smoothRing(r, passes) {
+  let p = resampleRing(r, 1); const n = p.length;
+  for (let it = 0; it < passes; it++) { const q = new Array(n); for (let i = 0; i < n; i++) { const a = p[(i + n - 1) % n], b = p[i], c = p[(i + 1) % n]; q[i] = [0.25 * a[0] + 0.5 * b[0] + 0.25 * c[0], 0.25 * a[1] + 0.5 * b[1] + 0.25 * c[1]]; } p = q; }
+  return p;
+}
 // maschera -> poligoni {outer, holes} in mm (y verso il basso)
 function maskToPolys(mask, w, h, minArea) {
-  const rings = traceRings(mask, w, h).map((r) => simplifyRing(chaikin(r, 2), 0.35).map((p) => [p[0] / PPM, p[1] / PPM])).filter((r) => r.length >= 3 && Math.abs(areaOf(r)) >= (minArea || 0.05));
+  const rings = traceRings(mask, w, h).map((r) => (SMOOTH_PASSES > 0 ? simplifyRing(smoothRing(r, SMOOTH_PASSES), 0.18) : simplifyRing(chaikin(r, 2), 0.35)).map((p) => [p[0] / PPM, p[1] / PPM])).filter((r) => r.length >= 3 && Math.abs(areaOf(r)) >= (minArea || 0.05));
   const info = rings.map((r) => ({ r, a: Math.abs(areaOf(r)), depth: 0, parent: -1 }));
   info.forEach((A, i) => { let best = Infinity; info.forEach((B, j) => { if (i !== j && B.a > A.a && inside(A.r[0], B.r)) { A.depth++; if (B.a < best) { best = B.a; A.parent = j; } } }); });
   const polys = []; const idx = new Map();
@@ -513,8 +613,21 @@ const TX = {
     hEngbitmap: 'The dark parts are embedded as a black-and-white image at 254 dpi. LightBurn engraves it in Image mode, with no settings to change. The red cut line stays a vector.', hEngfill: 'The dark parts are closed vector shapes. LightBurn shows them as lines: set the black layer to Fill to engrave them solid.', hEnglines: 'Only the outline of the dark parts, as lines. Good for line engraving or cutting.', pngHint: 'The PNG carries its size (254 dpi), so LightBurn imports it at the right size.',
     exportSvgZip: 'Download ZIP (SVG + PNG)',
     litSideL: 'Side facing the viewer', sideTex: 'Textured side (top, as printed)', sideSmooth: 'Smooth side (the one on the bed)', hSidetex: 'The image reads correctly when you look at the textured side, the one facing up while printing.', hSidesmooth: 'The plate is mirrored so that the image reads correctly from the smooth side, the one that was on the bed. The preview shows what the viewer sees.',
-    tabLit: 'Lithophane', litShapeL: 'Plate shape', litCut: 'Cut to the image outline', litRect: 'Rectangle', tmin: 'Thinnest (light)', tmax: 'Thickest (dark)', litFrame: 'Frame / margin', litGamma: 'Contrast', litInv: 'Invert (dark parts become thin)', litPitch: 'Detail', pFast: '0.4 mm · fast', pNorm: '0.3 mm · normal', pHigh: '0.2 mm · high (big file)',
+    twoLines: 'Two lines of text', text2: 'Second line', iconLabel: 'Icon next to the text', icNone: 'None', icLeft: 'Left', icRight: 'Right', icBoth: 'Both', icSize: 'Icon size', fitLabel: 'Fit the text to a plate width', fitWidth: 'Plate width',
+    smooth: 'Edge smoothness',
+ tabLit: 'Lithophane', litShapeL: 'Plate shape', litCut: 'Cut to the image outline', litRect: 'Rectangle', tmin: 'Thinnest (light)', tmax: 'Thickest (dark)', litFrame: 'Frame / margin', litGamma: 'Contrast', litInv: 'Invert (dark parts become thin)', litPitch: 'Detail', pFast: '0.4 mm · fast', pNorm: '0.3 mm · normal', pHigh: '0.2 mm · high (big file)',
     litViewL: 'Preview', viewBack: 'Backlit', view3d: '3D', ctlLit: 'Image and thickness',
+            cylHint: 'The picture wraps around the whole circumference (π × diameter wide) and is cropped to fill it. A wide, panoramic image works best; make the cylinder lower to see more of a square one.',
+    litFit: 'Show the whole picture inside the shape (no cropping)',
+    litZoom: 'Picture zoom (the shape stays the same)', litPanX: 'Move picture left / right', litPanY: 'Move picture up / down',
+    litFormL: 'Shape of the object', fPlate: 'Rectangle / cut plate', fCircle: 'Circle', fStar: 'Star', fHeart: 'Heart', fHex: 'Hexagon', fCyl: 'Cup / lamp (wraps all around)', cylD: 'Diameter', cylH: 'Height',
+    shapeReadme: 'SHAPED HOLDER (auto-sized to the plate)\nOuter size: %1 x %2 x %3 mm. Print the holder lying on its front face (the one with the window on the bed). Drop the plate in from the back (smooth side toward the window), put the LED in the cavity, then press the lid into the back (its plug goes into the pocket, the wider rim rests on the edge so it cannot fall in; the hole is for the cable). Pocket for the plate: %4 mm.\n',
+    cylReadme: 'CYLINDER (cup / lamp): the picture wraps around the whole circumference. Diameter %1 mm, height %2 mm.\nPrint the tube standing, white or light filament, 100% infill, thin layers (0.08-0.12 mm). The smooth side is the OUTSIDE, the relief is inside. The second part is the base: the tube slides over its collar. Put an LED tea-light inside.\n',
+    litBoxNote: 'With the box the plate is a rectangle without ring hole, so it slides into the slot.',
+    boxBack: 'Closed back (a cover behind the light chamber)', boxCable: 'Cable hole in the back',
+    litBox: 'Also make a holder box with a slot', boxWall: 'Box wall', boxLip: 'Front lip around the picture', boxClr: 'Clearance for the plate', boxDepth: 'Light chamber depth (0 = none)', boxSize: 'Box',
+    sepNote: 'The 3MF holds every part as a separate object, laid out on the plate without overlapping: in your slicer you can select, move, or delete each one. The STL files are the same parts one by one.\n',
+    boxReadme: 'HOLDER BOX (second part, auto-sized to the plate)\nOuter size: %1 x %2 x %3 mm. The slot is %4 mm wide and open on top: slide the plate in from above, relief side toward the light, smooth side toward the viewer.\nPrint it lying flat on its front face (the face with the window on the bed), 2-3 perimeters, 20% infill, any colour (dark colours hide the light spill best). Put a LED strip or a tea-light (LED) in the chamber; the closed back (with the cable hole) is part of the same print.\n',
     litHint: 'Print it flat in white or light filament, 100% infill, small layers (0.08-0.12 mm), then put a light behind it. Dark parts are thick and let little light through, light parts are thin. The plate is mirrored on purpose: the smooth side (the one on the bed) faces the viewer and the relief faces the light, so the image reads correctly. A drawing with only outlines works too: the outline is cut as the shape and the lines show up dark.',
     litReadme: 'Keychain Maker - lithophane\n\nPrint FLAT (the smooth back on the bed), white or light filament, 100% infill, layer height 0.08-0.12 mm, no supports.\nPut a light (LED strip, lamp, phone) behind it.\nThickness goes from %1 mm (light parts) to %2 mm (dark parts).\nSize: %3 x %4 mm.\n',
 
@@ -546,8 +659,21 @@ const TX = {
     hEngbitmap: 'Le parti scure sono incorporate come immagine in bianco e nero a 254 dpi. LightBurn la incide in modalità Immagine, senza cambiare impostazioni. La linea rossa di taglio resta vettoriale.', hEngfill: 'Le parti scure sono forme vettoriali chiuse. LightBurn le mostra come linee: imposta il livello nero su Riempimento per incidere in pieno.', hEnglines: 'Solo il contorno delle parti scure, come linee. Va bene per incidere a linea o per tagliare.', pngHint: 'Il PNG porta con sé la misura (254 dpi), quindi LightBurn lo importa alla dimensione giusta.',
     exportSvgZip: 'Scarica ZIP (SVG + PNG)',
     litSideL: 'Lato rivolto verso chi guarda', sideTex: 'Lato con il rilievo (sopra, come stampato)', sideSmooth: 'Lato liscio (quello sul piatto)', hSidetex: 'L\'immagine si legge bene guardando il lato con il rilievo, quello rivolto in alto durante la stampa.', hSidesmooth: 'La lastra è specchiata, così l\'immagine si legge bene dal lato liscio, quello che stava sul piatto. L\'anteprima mostra quello che vede chi guarda.',
-    tabLit: 'Litofania', litShapeL: 'Forma della lastra', litCut: 'Tagliata sul contorno dell\'immagine', litRect: 'Rettangolo', tmin: 'Più sottile (luce)', tmax: 'Più spessa (scuro)', litFrame: 'Cornice / margine', litGamma: 'Contrasto', litInv: 'Inverti (le parti scure diventano sottili)', litPitch: 'Dettaglio', pFast: '0,4 mm · veloce', pNorm: '0,3 mm · normale', pHigh: '0,2 mm · alto (file grande)',
+    twoLines: 'Testo su due righe', text2: 'Seconda riga', iconLabel: 'Icona accanto al testo', icNone: 'Nessuna', icLeft: 'Sinistra', icRight: 'Destra', icBoth: 'Entrambe', icSize: 'Dimensione icona', fitLabel: 'Adatta il testo alla larghezza della targhetta', fitWidth: 'Larghezza targhetta',
+    smooth: 'Morbidezza dei bordi',
+ tabLit: 'Litofania', litShapeL: 'Forma della lastra', litCut: 'Tagliata sul contorno dell\'immagine', litRect: 'Rettangolo', tmin: 'Più sottile (luce)', tmax: 'Più spessa (scuro)', litFrame: 'Cornice / margine', litGamma: 'Contrasto', litInv: 'Inverti (le parti scure diventano sottili)', litPitch: 'Dettaglio', pFast: '0,4 mm · veloce', pNorm: '0,3 mm · normale', pHigh: '0,2 mm · alto (file grande)',
     litViewL: 'Anteprima', viewBack: 'Retroilluminata', view3d: '3D', ctlLit: 'Immagine e spessori',
+            cylHint: 'L\'immagine avvolge tutta la circonferenza (larga π × diametro) e viene ritagliata per riempirla. Va meglio un\'immagine larga, panoramica; abbassa il cilindro per vederne di più di una quadrata.',
+    litFit: 'Mostra tutta l\'immagine dentro la forma (senza tagli)',
+    litZoom: 'Zoom dell\'immagine (la forma resta uguale)', litPanX: 'Sposta immagine a sinistra / destra', litPanY: 'Sposta immagine su / giù',
+    litFormL: 'Forma dell\'oggetto', fPlate: 'Rettangolo / piastra sagomata', fCircle: 'Cerchio', fStar: 'Stella', fHeart: 'Cuore', fHex: 'Esagono', fCyl: 'Tazza / lampada (avvolge tutto intorno)', cylD: 'Diametro', cylH: 'Altezza',
+    shapeReadme: 'SUPPORTO A FORMA (dimensionato sulla piastra)\nMisura esterna: %1 x %2 x %3 mm. Stampa il supporto disteso sulla faccia frontale (quella con la finestra sul piatto). Infila la piastra da dietro (lato liscio verso la finestra), metti il LED nella cavità, poi premi il coperchio sul retro (il tappo entra nell\'alloggio, il bordo più largo appoggia sul contorno e non può cadere dentro; il foro serve al cavo). Alloggio della piastra: %4 mm.\n',
+    cylReadme: 'CILINDRO (tazza / lampada): l\'immagine avvolge tutta la circonferenza. Diametro %1 mm, altezza %2 mm.\nStampa il tubo in piedi, filamento bianco o chiaro, riempimento 100%, layer sottili (0,08-0,12 mm). Il lato liscio è l\'ESTERNO, il rilievo è dentro. Il secondo pezzo è la base: il tubo si infila sul suo collare. Dentro metti una candela LED.\n',
+    litBoxNote: 'Con la scatola la piastra è un rettangolo, senza foro per l\'anello, così scivola nella scanalatura.',
+    boxBack: 'Fondo chiuso (un coperchio dietro la camera della luce)', boxCable: 'Foro per il cavo sul fondo',
+    litBox: 'Crea anche una scatola con scanalatura', boxWall: 'Spessore pareti scatola', boxLip: 'Bordo frontale attorno all\'immagine', boxClr: 'Gioco per la piastra', boxDepth: 'Profondità camera luce (0 = nessuna)', boxSize: 'Scatola',
+    sepNote: 'Il 3MF contiene ogni pezzo come oggetto separato, già disposto sul piatto senza sovrapposizioni: nello slicer puoi selezionare, spostare o eliminare ciascuno. Gli STL sono gli stessi pezzi, uno per file.\n',
+    boxReadme: 'SCATOLA PORTA-LITOFANIA (seconda parte, dimensionata sulla piastra)\nMisura esterna: %1 x %2 x %3 mm. La scanalatura è larga %4 mm e aperta in alto: infila la piastra dall\'alto, lato con il rilievo verso la luce, lato liscio verso chi guarda.\nStampala distesa sulla faccia frontale (quella con la finestra sul piatto), 2-3 perimetri, riempimento 20%, qualsiasi colore (i colori scuri trattengono meglio la luce). Nella camera metti una striscia LED o una candela LED; il fondo chiuso (con il foro per il cavo) è già nella stessa stampa.\n',
     litHint: 'Stampala distesa, in filamento bianco o chiaro, riempimento 100%, layer piccoli (0,08-0,12 mm), poi metti una luce dietro. Le parti scure sono spesse e fanno passare poca luce, quelle chiare sono sottili. La lastra è specchiata di proposito: il lato liscio (quello sul piatto) sta verso chi guarda e il rilievo verso la luce, così l\'immagine si legge bene. Funziona anche un disegno fatto solo di contorni: il contorno taglia la forma e le linee escono scure.',
     litReadme: 'Keychain Maker - litofania\n\nStampa DISTESA (il lato liscio sul piatto), filamento bianco o chiaro, riempimento 100%, altezza layer 0,08-0,12 mm, niente supporti.\nMetti una luce (striscia LED, lampada, telefono) dietro.\nLo spessore va da %1 mm (parti chiare) a %2 mm (parti scure).\nMisure: %3 x %4 mm.\n',
 
@@ -581,7 +707,7 @@ const t = (k, ...args) => { let s = TX[LANG][k] !== undefined ? TX[LANG][k] : TX
 const S = {
   mode: 'text', shape: 'round', src: null, raw: null, srcName: '', busy: 0, seq: 0, last: null,
   v: { text: { hole: 'left' }, img: { hole: 'top', w: 45, margin: 3, thr: 30 }, svg: { hole: 'none', w: 60, margin: 0, thr: 50 }, hue: { hole: 'top', w: 45, margin: 3, thr: 0 }, lit: { hole: 'top', w: 100, margin: 0, thr: 0 } },
-  litShape: 'cut', litView: 'back',
+  litShape: 'cut', litView: 'back', icon: 'heart', iconPos: 'none',
   hue: { n: 5, key: '', hex: [], lab: [], order: [], removed: new Set(), fix: [], sel: null, map: null, rev: false, ver: 0 },
 };
 
@@ -703,31 +829,81 @@ function hueHexByRank(k) { return S.hue.hex[S.hue.order[k]]; }
 /* ---------- sorgenti delle maschere ---------- */
 const val = (id) => +$(id).value;
 function holeInfo() { return { d: val('holeD'), wall: 2 }; }
+/* ---------- icone incluse (24 x 24) ---------- */
+const ICONS = {
+  heart: (c) => c.fill(new Path2D('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z')),
+  star: (c) => c.fill(new Path2D('M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z')),
+  paw: (c) => { c.fill(new Path2D('M12 12c-2.8 0-5.5 3-5.5 5.4 0 1.9 1.5 2.9 3 2.9 1 0 1.6-.5 2.5-.5s1.5.5 2.5.5c1.5 0 3-1 3-2.9C17.5 15 14.8 12 12 12z')); [[5.2, 10.8, 2, 2.6], [9.4, 6.4, 2.1, 2.8], [14.6, 6.4, 2.1, 2.8], [18.8, 10.8, 2, 2.6]].forEach(([x, y, rx, ry]) => { c.beginPath(); c.ellipse(x, y, rx, ry, 0, 0, 7); c.fill(); }); },
+  moon: (c) => c.fill(new Path2D('M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54 0 4.48-2.94 8.27-7 9.54.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z')),
+  sun: (c) => { c.beginPath(); c.arc(12, 12, 4.6, 0, 7); c.fill(); for (let k = 0; k < 8; k++) { c.save(); c.translate(12, 12); c.rotate(k * Math.PI / 4); c.fillRect(-1.2, -11, 2.4, 4.2); c.restore(); } },
+  cloud: (c) => c.fill(new Path2D('M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z')),
+  flower: (c) => { for (let k = 0; k < 6; k++) { c.beginPath(); c.arc(12 + 5.8 * Math.cos(k * Math.PI / 3), 12 + 5.8 * Math.sin(k * Math.PI / 3), 3.6, 0, 7); c.fill(); } c.beginPath(); c.arc(12, 12, 3.6, 0, 7); c.fill(); },
+  leaf: (c) => c.fill(new Path2D('M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.88 15.87 20 4 20 4S8.73 3.86 6.05 8.05z')),
+  clover: (c) => { [[8, 8], [16, 8], [8, 15], [16, 15]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 4.6, 0, 7); c.fill(); }); c.fillRect(11, 12, 2, 10); },
+  bolt: (c) => c.fill(new Path2D('M7 2v11h3v9l7-12h-4l4-8z')),
+  note: (c) => c.fill(new Path2D('M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z')),
+  key: (c) => c.fill(new Path2D('M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z'), 'evenodd'),
+  home: (c) => c.fill(new Path2D('M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z')),
+  crown: (c) => c.fill(new Path2D('M3 19l-1-11 5 4 5-8 5 8 5-4-1 11z')),
+  diamond: (c) => c.fill(new Path2D('M12 22L2 9l4-6h12l4 6z')),
+  snowflake: (c) => { c.lineWidth = 2; c.lineCap = 'round'; c.translate(12, 12); for (let k = 0; k < 3; k++) { c.save(); c.rotate(k * Math.PI / 3); c.beginPath(); c.moveTo(0, -10.5); c.lineTo(0, 10.5); [-6.5, 6.5].forEach((y) => { c.moveTo(-3, y - Math.sign(y) * 3); c.lineTo(0, y); c.lineTo(3, y - Math.sign(y) * 3); }); c.stroke(); c.restore(); } },
+  anchor: (c) => { c.lineWidth = 2.2; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.arc(12, 4.6, 2.3, 0, 7); c.stroke(); c.beginPath(); c.moveTo(12, 7); c.lineTo(12, 21); c.moveTo(8, 10); c.lineTo(16, 10); c.moveTo(3, 14); c.arc(12, 13, 9, Math.PI * 1.05, Math.PI * 1.0, true); c.stroke(); c.beginPath(); c.arc(12, 12, 8.5, 0.05 * Math.PI, 0.95 * Math.PI); c.stroke(); },
+  cup: (c) => c.fill(new Path2D('M2 21h18v-2H2v2zM20 8h-2V5h2v3zm0-5H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2z')),
+  fish: (c) => { const p = new Path2D(); p.ellipse(10, 12, 8, 5, 0, 0, 7); p.moveTo(16, 12); p.lineTo(23, 5.5); p.lineTo(23, 18.5); p.closePath(); c.fill(p); c.globalCompositeOperation = 'destination-out'; c.beginPath(); c.arc(6, 10.8, 1.2, 0, 7); c.fill(); },
+  bone: (c) => { c.save(); c.translate(12, 12); c.rotate(-Math.PI / 5); c.fillRect(-8, -2, 16, 4); [[-8.5, -2.3], [-8.5, 2.3], [8.5, -2.3], [8.5, 2.3]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 2.9, 0, 7); c.fill(); }); c.restore(); },
+  cat: (c) => { c.beginPath(); c.arc(12, 14, 8, 0, 7); c.fill(); c.fill(new Path2D('M4.2 13L4.6 2.5 11 7z')); c.fill(new Path2D('M19.8 13L19.4 2.5 13 7z')); c.globalCompositeOperation = 'destination-out'; [[8.8, 13.2], [15.2, 13.2]].forEach(([x, y]) => { c.beginPath(); c.ellipse(x, y, 1.3, 1.7, 0, 0, 7); c.fill(); }); c.beginPath(); c.moveTo(10.6, 16.6); c.lineTo(13.4, 16.6); c.lineTo(12, 18.2); c.fill(); },
+  smile: (c) => { c.beginPath(); c.arc(12, 12, 10.5, 0, 7); c.fill(); c.globalCompositeOperation = 'destination-out'; [[8.5, 9.5], [15.5, 9.5]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 1.7, 0, 7); c.fill(); }); c.lineWidth = 1.9; c.lineCap = 'round'; c.beginPath(); c.arc(12, 12.4, 5.6, 0.15 * Math.PI, 0.85 * Math.PI); c.stroke(); },
+  plane: (c) => c.fill(new Path2D('M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z')),
+  boy: (c) => { c.beginPath(); c.arc(12, 11, 6.8, 0, 7); c.fill(); c.beginPath(); [[5.2, 9], [6.5, 3.6], [10, 5.4], [14, 3], [17.5, 4.6], [18.8, 9]].forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.fill(); c.fill(new Path2D('M3 24c0-5 4-7 9-7s9 2 9 7z')); c.globalCompositeOperation = 'destination-out'; [[9.2, 11], [14.8, 11]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 1.1, 0, 7); c.fill(); }); c.lineWidth = 1.3; c.lineCap = 'round'; c.beginPath(); c.arc(12, 12.2, 3, 0.25 * Math.PI, 0.75 * Math.PI); c.stroke(); c.beginPath(); c.moveTo(5.6, 8); c.lineTo(18.4, 8); c.lineWidth = 0.8; c.stroke(); },
+  girl: (c) => { c.beginPath(); c.arc(12, 11.5, 6.8, 0, 7); c.fill(); [[3.6, 9.5], [20.4, 9.5]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 3, 0, 7); c.fill(); }); c.beginPath(); [[12, 4.2], [7.2, 0.8], [7.2, 7.6]].forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.fill(); c.beginPath(); [[12, 4.2], [16.8, 0.8], [16.8, 7.6]].forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.fill(); c.fill(new Path2D('M12 17.5L19 24H5z')); c.globalCompositeOperation = 'destination-out'; [[9.2, 11.5], [14.8, 11.5]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 1.1, 0, 7); c.fill(); }); c.lineWidth = 1.3; c.lineCap = 'round'; c.beginPath(); c.arc(12, 12.7, 3, 0.25 * Math.PI, 0.75 * Math.PI); c.stroke(); c.beginPath(); c.arc(12, 4.2, 0.9, 0, 7); c.fill(); },
+  car: (c) => { c.fill(new Path2D('M1.5 15.5L3.4 9.8C3.9 8.4 5 7.6 6.4 7.6H17.6C19 7.6 20.1 8.4 20.6 9.8L22.5 15.5V19.5H1.5z')); c.globalCompositeOperation = 'destination-out'; c.fill(new Path2D('M5 9.8L6 9H11V12.4H4.2zM13 9H18L19 9.8L19.8 12.4H13z')); [[6.5, 18.6], [17.5, 18.6]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 3.6, 0, 7); c.fill(); }); c.globalCompositeOperation = 'source-over'; [[6.5, 18.6], [17.5, 18.6]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 2.4, 0, 7); c.fill(); }); },
+  rocket: (c) => { c.fill(new Path2D('M12 1C16.5 5 17.5 10 16.2 16H7.8C6.5 10 7.5 5 12 1z')); c.fill(new Path2D('M7.8 11.5L3.5 16.5V19L8 17zM16.2 11.5L20.5 16.5V19L16 17z')); c.fill(new Path2D('M9.2 17.4H14.8L12 23z')); c.globalCompositeOperation = 'destination-out'; c.beginPath(); c.arc(12, 9, 2.1, 0, 7); c.fill(); },
+  bike: (c) => { c.lineWidth = 1.9; c.lineCap = c.lineJoin = 'round'; [[5.5, 16], [18.5, 16]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 4, 0, 7); c.stroke(); }); c.beginPath(); c.moveTo(5.5, 16); c.lineTo(10 , 8.5); c.lineTo(16 , 8.5); c.lineTo(18.5, 16); c.moveTo(10, 8.5); c.lineTo(12.5, 16); c.lineTo(5.5, 16); c.moveTo(12.5, 16); c.lineTo(16, 8.5); c.moveTo(8.6, 6.4); c.lineTo(11.4, 6.4); c.moveTo(16, 8.5); c.lineTo(15.2, 5.2); c.lineTo(17.6, 5); c.stroke(); },
+  dog: (c) => { c.beginPath(); c.arc(12, 12.5, 6.8, 0, 7); c.fill(); [-1, 1].forEach((s) => { c.save(); c.translate(12 + s * 7.4, 8); c.rotate(s * 0.35); c.beginPath(); c.ellipse(0, 3.2, 2.9, 5.6, 0, 0, 7); c.fill(); c.restore(); }); c.globalCompositeOperation = 'destination-out'; [[9.2, 11], [14.8, 11]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 1.15, 0, 7); c.fill(); }); c.beginPath(); c.ellipse(12, 14.6, 2, 1.4, 0, 0, 7); c.fill(); c.lineWidth = 1.1; c.lineCap = 'round'; c.beginPath(); c.moveTo(12, 15.8); c.lineTo(12, 17.2); c.moveTo(9.6, 18); c.quadraticCurveTo(12, 19.4, 14.4, 18); c.stroke(); },
+  butterfly: (c) => { [[7.2, 8, 5.2, 6.4, -0.5], [16.8, 8, 5.2, 6.4, 0.5], [8, 16.4, 3.8, 4.4, 0.5], [16, 16.4, 3.8, 4.4, -0.5]].forEach(([x, y, rx, ry, r]) => { c.beginPath(); c.ellipse(x, y, rx, ry, r, 0, 7); c.fill(); }); c.beginPath(); c.ellipse(12, 12.5, 1.5, 7, 0, 0, 7); c.fill(); c.lineWidth = 1; c.lineCap = 'round'; c.beginPath(); c.moveTo(11.5, 6); c.quadraticCurveTo(10, 3, 8.5, 2.5); c.moveTo(12.5, 6); c.quadraticCurveTo(14, 3, 15.5, 2.5); c.stroke(); },
+  gift: (c) => { c.fillRect(3, 10, 18, 12); c.fillRect(2, 6.5, 20, 4.5); c.fill(new Path2D('M12 6.5C9 6.5 6 5.5 6 3.6 6 1.9 8.3 1.6 9.7 2.6 10.8 3.4 11.6 5 12 6.5zM12 6.5C15 6.5 18 5.5 18 3.6 18 1.9 15.7 1.6 14.3 2.6 13.2 3.4 12.4 5 12 6.5z')); c.globalCompositeOperation = 'destination-out'; c.fillRect(11, 6.5, 2, 15.5); },
+  umbrella: (c) => { c.fill(new Path2D('M12 3C6.5 3 2.4 7 2 12H22C21.6 7 17.5 3 12 3z')); c.lineWidth = 1.9; c.lineCap = 'round'; c.beginPath(); c.moveTo(12, 12); c.lineTo(12, 19); c.arc(14.2, 19, 2.2, Math.PI, 0.35 * Math.PI, true); c.stroke(); c.globalCompositeOperation = 'destination-out'; c.lineWidth = 0.7; c.beginPath(); c.moveTo(12, 4); c.lineTo(12, 11.5); c.moveTo(8.2, 4.7); c.quadraticCurveTo(7.5, 8, 7.8, 11.5); c.moveTo(15.8, 4.7); c.quadraticCurveTo(16.5, 8, 16.2, 11.5); c.stroke(); },
+  fire: (c) => c.fill(new Path2D('M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z'), 'evenodd'),
+};
+function iconCanvas(name, px, color) { const cv = document.createElement('canvas'); cv.width = cv.height = Math.max(2, Math.ceil(px)); const c = cv.getContext('2d'); c.scale(cv.width / 24, cv.height / 24); c.fillStyle = c.strokeStyle = color || '#000'; (ICONS[name] || ICONS.heart)(c); return cv; }
+
+/* ---------- targhetta: sorgenti delle maschere ---------- */
 async function textSources() {
-  const txt = $('txt').value.replace(/\s+$/, ''); if (!txt) return null;
-  const [fam, wt] = $('font').value.split('|'); try { await document.fonts.load(`${wt} 100px "${fam}"`, txt); } catch (_) { }
-  const fs = val('size') * PPM, pad = val('pad') * PPM, hole = S.v.text.hole, hi = holeInfo(), Ro = (hi.d / 2 + hi.wall) * PPM;
-  const tc = document.createElement('canvas').getContext('2d'); tc.font = `${wt} ${fs}px "${fam}", sans-serif`;
-  const m = tc.measureText(txt), left = m.actualBoundingBoxLeft, asc = m.actualBoundingBoxAscent, desc = m.actualBoundingBoxDescent, inkW = left + m.actualBoundingBoxRight, inkH = asc + desc;
-  const tabX = hole === 'left' ? 2 * Ro : 0, tabY = hole === 'top' ? 2 * Ro : 0;
-  let bw = inkW + 2 * pad + tabX, bh = inkH + 2 * pad + tabY; const M = Math.ceil(4 * PPM + Ro);
-  const sx = S.shape === 'oval' ? 1.3 : 1, sy = S.shape === 'oval' ? 1.4 : 1, BW = bw * sx, BH = bh * sy;
+  const lines = [$('txt').value.replace(/\s+$/, '')]; if ($('cTwo').checked) lines.push($('txt2').value.replace(/\s+$/, ''));
+  const L = lines.filter((s) => s.length); if (!L.length) return null;
+  const [fam, wt] = $('font').value.split('|'); try { await document.fonts.load(`${wt} 100px "${fam}"`, L.join('')); } catch (_) { }
+  const hole = S.v.text.hole, hi = holeInfo(), Ro = (hi.d / 2 + hi.wall) * PPM, pad = val('pad') * PPM;
+  const icPos = S.iconPos, nL = icPos === 'left' || icPos === 'both' ? 1 : 0, nR = icPos === 'right' || icPos === 'both' ? 1 : 0, nIc = nL + nR, icScale = val('icScale') / 100;
+  const tc = document.createElement('canvas').getContext('2d'), tabX = hole === 'left' ? 2 * Ro : 0, tabY = hole === 'top' ? 2 * Ro : 0;
+  const layout = (fs) => {
+    tc.font = `${wt} ${fs}px "${fam}", sans-serif`;
+    const ms = L.map((s) => { const m = tc.measureText(s); return { s, left: m.actualBoundingBoxLeft, w: m.actualBoundingBoxLeft + m.actualBoundingBoxRight, asc: m.actualBoundingBoxAscent, desc: m.actualBoundingBoxDescent }; });
+    const adv = fs * 1.15, inkW = Math.max(...ms.map((m) => m.w)), asc0 = ms[0].asc, inkH = asc0 + (ms.length - 1) * adv + ms[ms.length - 1].desc, ic = inkH * icScale, gap = nIc ? fs * 0.35 : 0;
+    return { ms, adv, inkW, inkH, asc0, ic, gap, contentW: inkW + nIc * (ic + gap), font: tc.font };
+  };
+  let fs = val('size') * PPM, Lo = layout(fs);
+  if ($('cFit').checked) { const target = val('fitW') * PPM - 2 * pad; if (target > 5) { fs *= target / Lo.contentW; Lo = layout(fs); } }
+  const bw = Lo.contentW + 2 * pad + tabX, bh = Math.max(Lo.inkH, nIc ? Lo.ic : 0) + 2 * pad + tabY, M = Math.ceil(4 * PPM + Ro);
+  const kk = Math.min(bw, bh) * 0.32, sx = S.shape === 'oval' ? 1.45 : 1, sy = S.shape === 'oval' ? 1.45 : 1, BW = S.shape === 'hex' ? bw + 2 * kk : S.shape === 'round' ? bw + Math.min(bw, bh) * 0.12 : bw * sx, BH = bh * sy;
   const w = Math.ceil(BW + 2 * M), h = Math.ceil(BH + 2 * M), cx = w / 2, cy = h / 2;
-  const x0 = cx - BW / 2, y0 = cy - BH / 2, rx0 = cx - bw / 2, ry0 = cy - bh / 2; // rettangolo del contenuto
+  const x0 = cx - BW / 2, y0 = cy - BH / 2, rx0 = cx - bw / 2, ry0 = cy - bh / 2;
   const bc = document.createElement('canvas'); bc.width = w; bc.height = h; const b = bc.getContext('2d'); b.fillStyle = '#000';
   b.beginPath();
   if (S.shape === 'round') { const r = Math.min(BW, BH) * 0.28; b.moveTo(x0 + r, y0); b.arcTo(x0 + BW, y0, x0 + BW, y0 + BH, r); b.arcTo(x0 + BW, y0 + BH, x0, y0 + BH, r); b.arcTo(x0, y0 + BH, x0, y0, r); b.arcTo(x0, y0, x0 + BW, y0, r); }
   else if (S.shape === 'oval') b.ellipse(cx, cy, BW / 2, BH / 2, 0, 0, 7);
-  else { const k = Math.min(BW, BH) * 0.32; [[x0 + k, y0], [x0 + BW - k, y0], [x0 + BW, cy], [x0 + BW - k, y0 + BH], [x0 + k, y0 + BH], [x0, cy]].forEach((p, i) => i ? b.lineTo(p[0], p[1]) : b.moveTo(p[0], p[1])); }
+  else { const k = kk;[[x0 + k, y0], [x0 + BW - k, y0], [x0 + BW, cy], [x0 + BW - k, y0 + BH], [x0 + k, y0 + BH], [x0, cy]].forEach((p, i) => i ? b.lineTo(p[0], p[1]) : b.moveTo(p[0], p[1])); }
   b.closePath(); b.fill();
   let hx = 0, hy = 0;
   if (hole === 'left') { hx = rx0 + Ro; hy = cy; } else if (hole === 'top') { hx = cx; hy = ry0 + Ro; }
   if (hole !== 'none') { b.beginPath(); b.arc(hx, hy, Ro, 0, 7); b.fill(); }
-  const ac = document.createElement('canvas'); ac.width = w; ac.height = h; const a = ac.getContext('2d'); a.font = tc.font; a.fillStyle = '#000'; a.textBaseline = 'alphabetic';
-  a.fillText(txt, rx0 + pad + tabX + left, ry0 + pad + tabY + asc);
+  const ac = document.createElement('canvas'); ac.width = w; ac.height = h; const a = ac.getContext('2d'); a.font = Lo.font; a.fillStyle = '#000'; a.textBaseline = 'alphabetic';
+  const ox = rx0 + pad + tabX, oy = ry0 + pad + tabY, blockH = Math.max(Lo.inkH, nIc ? Lo.ic : 0), tyOff = (blockH - Lo.inkH) / 2, icY = oy + (blockH - Lo.ic) / 2, tx0 = ox + (nL ? Lo.ic + Lo.gap : 0);
+  Lo.ms.forEach((m, k) => a.fillText(m.s, tx0 + (Lo.inkW - m.w) / 2 + m.left, oy + tyOff + Lo.asc0 + k * Lo.adv));
+  if (nIc) { const icv = iconCanvas(S.icon, Lo.ic); if (nL) a.drawImage(icv, ox, icY, Lo.ic, Lo.ic); if (nR) a.drawImage(icv, tx0 + Lo.inkW + Lo.gap, icY, Lo.ic, Lo.ic); }
   const toMask = (c) => { const d = c.getContext('2d').getImageData(0, 0, w, h).data, o = new Uint8Array(w * h); for (let i = 0; i < o.length; i++) o[i] = d[4 * i + 3] > 127 ? 1 : 0; return o; };
   return { w, h, art: toMask(ac), base: toMask(bc), hole: hole !== 'none' ? { x: hx, y: hy, r: hi.d / 2 * PPM } : null };
 }
+
 function imageSources() {
   if (!S.src) return null; const m = S.mode, v = S.v[m], hi = holeInfo(), Ro = (hi.d / 2 + hi.wall) * PPM, hole = v.hole;
   const wpx = Math.round(v.w * PPM), hpx = Math.max(2, Math.round(wpx * S.src.height / S.src.width)), mg = v.margin * PPM, rimPx = (m === 'svg' || m === 'hue' ? 0 : val('rimW')) * PPM;
@@ -782,15 +958,80 @@ function heightMesh(mask, tk, w, h, p, i0, j0, i1, j1) { // lastra con spessore 
   }
   return { V, I: I.subarray(0, q) };
 }
+/* ---------- forme per la litofania (piastra a forma + supporto / lampada cilindrica) ---------- */
+const LIT_ASPECT = { circle: 1, star: 0.905, heart: 0.9175, hex: 0.866 };
+function litShapeMask(form, gw, gh) {
+  const c = document.createElement('canvas'); c.width = gw; c.height = gh; const x = c.getContext('2d'); x.fillStyle = '#000'; x.beginPath();
+  if (form === 'circle') x.ellipse(gw / 2, gh / 2, gw / 2, gh / 2, 0, 0, 7);
+  else if (form === 'star') { const r0 = gw / 2; for (let k = 0; k < 10; k++) { const r = k % 2 ? r0 * 0.46 : r0, an = -Math.PI / 2 + k * Math.PI / 5, px = r0 + r * Math.cos(an), py = r0 + r * Math.sin(an); k ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); }
+  else if (form === 'hex') { [[0.25, 0], [0.75, 0], [1, 0.5], [0.75, 1], [0.25, 1], [0, 0.5]].forEach(([u, v], k) => (k ? x.lineTo(u * gw, v * gh) : x.moveTo(u * gw, v * gh))); x.closePath(); }
+  else { x.setTransform(gw / 20, 0, 0, gh / 18.35, -2 * gw / 20, -3 * gh / 18.35); x.fill(new Path2D('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z')); x.setTransform(1, 0, 0, 1, 0, 0); }
+  if (form !== 'heart') x.fill(); const d = x.getImageData(0, 0, gw, gh).data, o = new Uint8Array(gw * gh); for (let i = 0; i < o.length; i++) o[i] = d[4 * i + 3] > 127 ? 1 : 0; return o;
+}
+function fitRectIn(mask, gw, gh, asp) {
+  let sx = 0, sy = 0, n = 0; for (let j = 0; j < gh; j++) for (let i = 0; i < gw; i++) if (mask[j * gw + i]) { sx += i; sy += j; n++; } const cx = sx / n, cy = sy / n;
+  const ok = (s) => { const iw = s, ih = s / asp, x0 = Math.round(cx - iw / 2), x1 = Math.round(cx + iw / 2) - 1, y0 = Math.round(cy - ih / 2), y1 = Math.round(cy + ih / 2) - 1; if (x0 < 0 || y0 < 0 || x1 >= gw || y1 >= gh) return false; for (let i = x0; i <= x1; i++) if (!mask[y0 * gw + i] || !mask[y1 * gw + i]) return false; for (let j = y0; j <= y1; j++) if (!mask[j * gw + x0] || !mask[j * gw + x1]) return false; return true; };
+  let lo = 4, hi = gw * 1.2; for (let k = 0; k < 22; k++) { const m = (lo + hi) / 2; if (ok(m)) lo = m; else hi = m; } return { x: cx - lo / 2, y: cy - lo / asp / 2, w: lo, h: lo / asp };
+}
+function mergeExt(layers, Hh) { const V = [], I = []; let stuck = 0; layers.forEach(([pl, z0, z1]) => { if (!pl.length) return; const m = extrude(pl, Hh, z0, z1), o = V.length / 3; for (let k = 0; k < m.V.length; k++) V.push(m.V[k]); for (let k = 0; k < m.I.length; k++) I.push(m.I[k] + o); stuck += m.stuck || 0; }); return { V: Float32Array.from(V), I: Uint32Array.from(I), stuck }; }
+function placeAt(m, dx, dy) { let mx = Infinity, my = Infinity; for (let k = 0; k < m.V.length; k += 3) { if (m.V[k] < mx) mx = m.V[k]; if (m.V[k + 1] < my) my = m.V[k + 1]; } let Mx = -Infinity, My = -Infinity; for (let k = 0; k < m.V.length; k += 3) { m.V[k] += dx - mx; m.V[k + 1] += dy - my; if (m.V[k] > Mx) Mx = m.V[k]; if (m.V[k + 1] > My) My = m.V[k + 1]; } return { w: Mx - dx, h: My - dy }; }
+function shapedHolder(base, w, h, p, ppm, tmax, dx) {
+  const wall = val('boxWall'), lip = val('boxLip'), clr = val('boxClr'), dep = val('boxDepth'), f = 1.6, d = tmax + 0.6, k = PPM * p;
+  const polys = (mk) => maskToPolys(mk, w, h, 0.5).map((q) => ({ outer: q.outer.map((r) => [r[0] * k, r[1] * k]), holes: q.holes.map((s) => s.map((r) => [r[0] * k, r[1] * k])) }));
+  const pocket = dilate(base, w, h, clr * ppm), outer = dilate(base, w, h, (clr + wall) * ppm), win = erode(base, w, h, lip * ppm), Hh = h * p;
+  const ringT = d + (dep > 0 ? dep : 0);
+  const sh = mergeExt([[polys(sub(outer, win)), 0, f], [polys(sub(outer, pocket)), f, f + ringT]], Hh), dim = placeAt(sh, dx, 0);
+  let lid = null;
+  if (dep > 0 && $('boxBack').checked) { // coperchio con tappo che entra nell'alloggio + bordo che appoggia e impedisce di cadere dentro
+    const nm = new Uint8Array(w * h);
+    if ($('boxCable').checked) { let bx0 = w, bx1 = 0, by0 = h, by1 = 0; for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (pocket[j * w + i]) { if (i < bx0) bx0 = i; if (i > bx1) bx1 = i; if (j < by0) by0 = j; if (j > by1) by1 = j; } const cx = Math.round((bx0 + bx1) / 2), cy = Math.round(by1 - (by1 - by0) / 3), hw = 4.5 * ppm, hh = 3.5 * ppm; for (let j = Math.floor(cy - hh); j <= Math.ceil(cy + hh); j++) for (let i = Math.floor(cx - hw); i <= Math.ceil(cx + hw); i++) if (j >= 0 && j < h && i >= 0 && i < w) nm[j * w + i] = 1; }
+    const plug = sub(erode(pocket, w, h, 0.25 * ppm), nm), flange = sub(erode(outer, w, h, 0.4 * ppm), nm), pl = Math.min(4, dep);
+    lid = mergeExt([[polys(flange), 0, 1.6], [polys(plug), 1.6, 1.6 + pl]], Hh); placeAt(lid, dx + dim.w + 10, 0);
+  }
+  return { sh, lid, Bw: dim.w, Bh: dim.h, depth: f + ringT, slot: d, shape: true };
+}
+function computeCyl(p, tmin, tmax) {
+  const D = val('cylD'), Hc = val('cylH'), gam = val('litGamma'), inv = $('litInv').checked, R = D / 2, nx = Math.max(24, Math.round(Math.PI * D / p)), ny = Math.max(8, Math.round(Hc / p));
+  const c = document.createElement('canvas'); c.width = nx; c.height = ny; const x = c.getContext('2d', { willReadFrequently: true }); x.imageSmoothingQuality = 'high'; x.fillStyle = '#fff'; x.fillRect(0, 0, nx, ny);
+  const sw = S.src.width, sh = S.src.height, s = Math.max(nx / sw, ny / sh); { const zm = val('litZoom') / 100, w2 = sw * s * zm, h2 = sh * s * zm; x.drawImage(S.src, nx / 2 + val('litPanX') / 100 * nx - w2 / 2, ny / 2 + val('litPanY') / 100 * ny - h2 / 2, w2, h2); }
+  const dd = x.getImageData(0, 0, nx, ny).data, tk = new Float32Array(nx * ny), ones = new Uint8Array(nx * ny).fill(1);
+  for (let k = 0; k < tk.length; k++) { const a = dd[4 * k + 3] / 255, l0 = a * (0.299 * dd[4 * k] + 0.587 * dd[4 * k + 1] + 0.114 * dd[4 * k + 2]) / 255 + (1 - a); let l = Math.pow(Math.min(1, Math.max(0, l0)), gam); if (inv) l = 1 - l; tk[k] = tmax - l * (tmax - tmin); }
+  const cell = (i, j) => tk[Math.min(ny - 1, Math.max(0, j)) * nx + ((i % nx) + nx) % nx], rows = ny + 1, V = new Float32Array(nx * rows * 6), I = new Uint32Array(nx * ny * 12 + nx * 12);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < nx; i++) { const t = (cell(i - 1, j - 1) + cell(i, j - 1) + cell(i - 1, j) + cell(i, j)) / 4, th = 2 * Math.PI * i / nx, z = Hc - j * p, o = (j * nx + i) * 6, co = Math.cos(th), si = Math.sin(th); V[o] = R + R * co; V[o + 1] = R + R * si; V[o + 2] = z; V[o + 3] = R + (R - t) * co; V[o + 4] = R + (R - t) * si; V[o + 5] = z; }
+  let q = 0; const tri = (A, B, C) => { I[q++] = A; I[q++] = B; I[q++] = C; }, O = (i, j) => (j * nx + (i % nx)) * 2, In = (i, j) => (j * nx + (i % nx)) * 2 + 1;
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const A = O(i, j), B = O(i + 1, j), C = O(i + 1, j + 1), Dd = O(i, j + 1), a = In(i, j), b = In(i + 1, j), cc = In(i + 1, j + 1), dd2 = In(i, j + 1); tri(A, C, B); tri(A, Dd, C); tri(a, b, cc); tri(a, cc, dd2); }
+  for (let i = 0; i < nx; i++) { tri(O(i, 0), O(i + 1, 0), In(i + 1, 0)); tri(O(i, 0), In(i + 1, 0), In(i, 0)); tri(O(i, ny), In(i + 1, ny), O(i + 1, ny)); tri(O(i, ny), In(i, ny), In(i + 1, ny)); }
+  const nm = (n) => (LANG === 'it' ? n[0] : n[1]);
+  const ring = (r, n = 96) => Array.from({ length: n }, (_, k) => [R + r * Math.cos(2 * Math.PI * k / n), R + r * Math.sin(2 * Math.PI * k / n)]);
+  const rc = R - tmax - 0.5, bs = mergeExt([[[{ outer: ring(R), holes: [] }], 0, 3], [[{ outer: ring(rc), holes: [ring(rc - 2)] }], 3, 9]], D);
+  placeAt(bs, D + 10, 0);
+  const parts = [{ name: nm(['Cilindro', 'Cylinder']), V, I: I.subarray(0, q), color: '#f2efe6', extruder: 1, stuck: 0 }, { name: nm(['Base', 'Base']), V: bs.V, I: bs.I, color: '#cccccc', extruder: 2, stuck: bs.stuck }];
+  return { W: D, H: Hc, EW: 2 * D + 10, EH: Math.max(D, Hc), kind: 'cyl', cyl: { D, Hc, rc }, P: { base: [], rim: [], art: [] }, thin: false, mode: 'lit', bands: null, total: tmax, tmin, tmax, litParts: parts, mirror: false, lit: { cw: nx, ch: ny, i0: 0, j0: 0, w: nx, base: ones, tk, tmin, tmax } };
+}
+/* ---------- scatola per la litofania (si adatta alla piastra, con scanalatura dall'alto) ---------- */
+function holderBox(W, H, tmax) {
+  const wall = val('boxWall'), lip = Math.min(val('boxLip'), W / 3, H / 3), clr = val('boxClr'), dep = val('boxDepth'), f = 1.6, d = tmax + 0.6;
+  const Bw = W + 2 * clr + 2 * wall, Bh = H + clr + wall, rc = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+  const px0 = wall + clr, py1 = Bh - wall, win = rc(px0 + lip, py1 - H + lip, px0 + W - lip, py1 - lip);
+  const frame = { outer: rc(0, 0, Bw, Bh), holes: [win] };
+  const U = { outer: [[0, 0], [wall, 0], [wall, Bh - wall], [Bw - wall, Bh - wall], [Bw - wall, 0], [Bw, 0], [Bw, Bh], [0, Bh]], holes: [] };
+  const ring = { outer: rc(0, 0, Bw, Bh), holes: [rc(wall, wall, Bw - wall, Bh - wall)] };
+  const layers = [[[frame], 0, f], [[U], f, f + d], [[frame], f + d, 2 * f + d]]; if (dep > 0) { layers.push([[ring], 2 * f + d, 2 * f + d + dep]); if ($('boxBack').checked) { const cx = Bw / 2, cw = 4.5, back = { outer: rc(0, 0, Bw, Bh), holes: $('boxCable').checked ? [rc(cx - cw, Bh - wall - 8, cx + cw, Bh - wall - 2)] : [] }; layers.push([[back], 2 * f + d + dep, 2 * f + d + dep + f]); } }
+  const V = [], I = []; let stuck = 0;
+  layers.forEach(([pl, z0, z1]) => { const m = extrude(pl, Bh, z0, z1), o = V.length / 3; for (let k = 0; k < m.V.length; k++) V.push(m.V[k]); for (let k = 0; k < m.I.length; k++) I.push(m.I[k] + o); stuck += m.stuck || 0; });
+  return { V: Float32Array.from(V), I: Uint32Array.from(I), stuck, Bw, Bh, depth: 2 * f + d + Math.max(0, dep) + (dep > 0 && $('boxBack').checked ? f : 0), slot: d };
+}
 function computeLit() {
   if (!S.src) return null;
-  const v = S.v.lit, p = +$('litPitch').value, ppm = 1 / p, tmin = val('tmin'), tmax = Math.max(val('tmax'), tmin + 0.2), fw = val('litFrame'), gam = val('litGamma'), inv = $('litInv').checked, cut = S.litShape === 'cut';
-  const hi = holeInfo(), Ro = (hi.d / 2 + hi.wall) * ppm, hole = v.hole;
-  const gw = Math.round(v.w * ppm), gh = Math.max(2, Math.round(gw * S.src.height / S.src.width)), P = Math.ceil((fw + (hole === 'none' ? 0 : hi.d + 2 * hi.wall) + 2) * ppm) + 2, w = gw + 2 * P, h = gh + 2 * P;
-  const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d', { willReadFrequently: true }); x.imageSmoothingQuality = 'high'; x.drawImage(S.src, P, P, gw, gh);
-  const d = x.getImageData(0, 0, w, h).data, inRect = (i, j) => i >= P && i < P + gw && j >= P && j < P + gh;
+  const v = S.v.lit, p = +$('litPitch').value, ppm = 1 / p, tmin = val('tmin'), tmax = Math.max(val('tmax'), tmin + 0.2), fw = val('litFrame'), gam = val('litGamma'), inv = $('litInv').checked, form = $('litForm').value, boxOn = $('litBox').checked, plateF = form === 'plate', cut = plateF && S.litShape === 'cut' && !boxOn;
+  if (form === 'cyl') return computeCyl(p, tmin, tmax);
+  const hi = holeInfo(), Ro = (hi.d / 2 + hi.wall) * ppm, hole = !plateF || boxOn ? 'none' : v.hole;
+  const gw = Math.round(v.w * ppm), gh = plateF ? Math.max(2, Math.round(gw * S.src.height / S.src.width)) : Math.round(gw * LIT_ASPECT[form]), P = Math.ceil((fw + (hole === 'none' ? 0 : hi.d + 2 * hi.wall) + 2 + (!plateF && boxOn ? val('boxWall') + val('boxClr') + 1 : 0)) * ppm) + 2, w = gw + 2 * P, h = gh + 2 * P;
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d', { willReadFrequently: true }); x.imageSmoothingQuality = 'high'; const shp0 = plateF ? null : litShapeMask(form, gw, gh);
+  if (plateF) x.drawImage(S.src, P, P, gw, gh); else { const zm = val('litZoom') / 100, ox = val('litPanX') / 100 * gw, oy = val('litPanY') / 100 * gh, sc = Math.max(gw / S.src.width, gh / S.src.height); const r = $('litFit').checked ? fitRectIn(shp0, gw, gh, S.src.width / S.src.height) : { x: (gw - S.src.width * sc) / 2, y: (gh - S.src.height * sc) / 2, w: S.src.width * sc, h: S.src.height * sc }; const w2 = r.w * zm, h2 = r.h * zm; x.save(); x.beginPath(); x.rect(P, P, gw, gh); x.clip(); x.drawImage(S.src, P + r.x + r.w / 2 + ox - w2 / 2, P + r.y + r.h / 2 + oy - h2 / 2, w2, h2); x.restore(); }
+  const d = x.getImageData(0, 0, w, h).data, shp = shp0, inRect = (i, j) => i >= P && i < P + gw && j >= P && j < P + gh;
   const content = new Uint8Array(w * h), bg = new Uint8Array(w * h), lum = new Float32Array(w * h);
-  for (let j = P; j < P + gh; j++) for (let i = P; i < P + gw; i++) { const k = j * w + i, a = d[4 * k + 3] / 255, l = (0.299 * d[4 * k] + 0.587 * d[4 * k + 1] + 0.114 * d[4 * k + 2]) / 255; lum[k] = a * l + (1 - a); content[k] = 1; }
+  for (let j = P; j < P + gh; j++) for (let i = P; i < P + gw; i++) { const k = j * w + i, a = d[4 * k + 3] / 255, l = (0.299 * d[4 * k] + 0.587 * d[4 * k + 1] + 0.114 * d[4 * k + 2]) / 255; lum[k] = a * l + (1 - a); content[k] = shp ? shp[(j - P) * gw + (i - P)] : 1; }
   if (cut) { // fuori = trasparente collegato al bordo
     const st = []; const seed = (i, j) => { const k = j * w + i; if (!bg[k] && d[4 * k + 3] < 128) { bg[k] = 1; st.push(k); } };
     for (let i = P; i < P + gw; i++) { seed(i, P); seed(i, P + gh - 1); } for (let j = P; j < P + gh; j++) { seed(P, j); seed(P + gw - 1, j); }
@@ -806,17 +1047,21 @@ function computeLit() {
   const m = heightMesh(base, tk, w, h, p, i0, j0, i1, j1), cw = i1 - i0 + 1, chh = j1 - j0 + 1, mirror = true;
   if (mirror) { const Wd = cw * p; for (let k = 0; k < m.V.length; k += 3) m.V[k] = Wd - m.V[k]; for (let k = 0; k < m.I.length; k += 3) { const q = m.I[k + 1]; m.I[k + 1] = m.I[k + 2]; m.I[k + 2] = q; } }
   const part = { name: LANG === 'it' ? 'Litofania' : 'Lithophane', V: m.V, I: m.I, color: '#f2efe6', extruder: 1, stuck: 0 };
-  return { W: cw * p, H: chh * p, P: { base: [], rim: [], art: [] }, thin: false, mode: 'lit', bands: null, total: tmax, tmin, tmax, litParts: [part], mirror, lit: { cw, ch: chh, i0, j0, w, base, tk, tmin, tmax } };
+  const parts = [part], Wd = cw * p, Hd = chh * p; let bx = null, EW = Wd, EH = Hd;
+  if (!plateF && boxOn) { bx = shapedHolder(base, w, h, p, ppm, tmax, Wd + 10); parts.push({ name: LANG === 'it' ? 'Supporto' : 'Holder', V: bx.sh.V, I: bx.sh.I, color: '#cccccc', extruder: 2, stuck: bx.sh.stuck }); if (bx.lid) parts.push({ name: LANG === 'it' ? 'Coperchio' : 'Lid', V: bx.lid.V, I: bx.lid.I, color: '#cccccc', extruder: 2, stuck: bx.lid.stuck }); EW = Wd + 10 + bx.Bw + (bx.lid ? 10 + bx.Bw : 0); EH = Math.max(Hd, bx.Bh); }
+  else if (plateF && boxOn) { bx = holderBox(Wd, Hd, tmax); const dx = Wd + 10; for (let k = 0; k < bx.V.length; k += 3) bx.V[k] += dx; parts.push({ name: LANG === 'it' ? 'Scatola' : 'Holder box', V: bx.V, I: bx.I, color: '#cccccc', extruder: 2, stuck: bx.stuck }); EW = dx + bx.Bw; EH = Math.max(Hd, bx.Bh); }
+  return { W: Wd, H: Hd, EW, EH, box: bx, P: { base: [], rim: [], art: [] }, thin: false, mode: 'lit', bands: null, total: tmax, tmin, tmax, litParts: parts, mirror, lit: { cw, ch: chh, i0, j0, w, base, tk, tmin, tmax } };
 }
 function drawLit(R) {
   const L = R.lit, cv = $('litCv'); cv.width = L.cw; cv.height = L.ch; const x = cv.getContext('2d'), im = x.createImageData(L.cw, L.ch), k = Math.log(1 / 0.05) / (L.tmax - L.tmin);
   for (let j = 0; j < L.ch; j++) for (let i = 0; i < L.cw; i++) { const s = (j + L.j0) * L.w + i + L.i0, o = 4 * (j * L.cw + i); if (!L.base[s]) { im.data[o + 3] = 0; continue; } const T = Math.exp(-k * (L.tk[s] - L.tmin)); im.data[o] = 255 * T; im.data[o + 1] = 244 * T; im.data[o + 2] = 214 * T; im.data[o + 3] = 255; }
   x.putImageData(im, 0, 0); cv.hidden = false; const g = gl3; if (g && g.r.domElement.parentNode) g.r.domElement.parentNode.removeChild(g.r.domElement); const sv = $('stage').querySelector('svg'); if (sv) sv.remove();
 }
-function litReadme(R) { return t('litReadme', R.tmin.toFixed(1), R.tmax.toFixed(1), R.W.toFixed(0), R.H.toFixed(0)) + t('hSidesmooth') + '\n'; }
+function litReadme(R) { return (R.litParts.length > 1 ? t('sepNote') + '\n' : '') + t('litReadme', R.tmin.toFixed(1), R.tmax.toFixed(1), R.W.toFixed(0), R.H.toFixed(0)) + t('hSidesmooth') + '\n' + (R.kind === 'cyl' ? '\n' + t('cylReadme', R.cyl.D.toFixed(0), R.cyl.Hc.toFixed(0)) + '\n' : R.box && R.box.shape ? '\n' + t('shapeReadme', R.box.Bw.toFixed(1), R.box.Bh.toFixed(1), R.box.depth.toFixed(1), R.box.slot.toFixed(1)) + '\n' : R.box ? '\n' + t('boxReadme', R.box.Bw.toFixed(1), R.box.Bh.toFixed(1), R.box.depth.toFixed(1), R.box.slot.toFixed(1)) + '\n' : ''); }
 
 /* ---------- calcolo ---------- */
 async function compute() {
+  SMOOTH_PASSES = [0, 4, 8, 14, 22, 32][+$('smooth').value];
   if (S.mode === 'lit') return computeLit();
   const src = S.mode === 'text' ? await textSources() : imageSources(); if (!src) return null;
   const rimW = S.mode === 'svg' || S.mode === 'hue' ? 0 : val('rimW');
@@ -886,8 +1131,8 @@ function show3d(R, parts) {
   const st = $('stage'); if (!g.r.domElement.parentNode) st.insertBefore(g.r.domElement, st.firstChild);
   g.grp.children.slice().forEach((m) => { g.grp.remove(m); m.geometry.dispose(); m.material.dispose(); });
   parts.forEach((p) => { const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(p.V, 3)); geo.setIndex(new THREE.BufferAttribute(p.I, 1)); const mat = new THREE.MeshStandardMaterial({ color: p.color, flatShading: true, roughness: 0.55, metalness: 0.0 }); const mesh = new THREE.Mesh(geo, mat); mesh.userData.k = p.extruder - 1; g.grp.add(mesh); });
-  g.grp.position.set(-R.W / 2, -R.H / 2, 0);
-  const th = heights(); const D = Math.max(R.W, R.H) * 1.9 + 20;
+  g.grp.position.set(-(R.EW || R.W) / 2, -(R.EH || R.H) / 2, 0);
+  const th = heights(); const D = Math.max(R.EW || R.W, R.EH || R.H) * 1.9 + 20;
   if (g.first || g.key !== R.W + 'x' + R.H) { g.cam.position.set(0, -D * 0.55, D * 0.8); g.ctl.target.set(0, 0, (R.total || (th.tb + th.hr)) / 2); g.ctl.update(); g.first = false; g.key = R.W + 'x' + R.H; }
   g.fit(); return true;
 }
@@ -934,6 +1179,7 @@ async function update() {
   const th = heights(), tris = parts.reduce((a, p) => a + p.I.length / 3, 0), bad = R.mode === 'lit' ? 0 : parts.reduce((a, p) => a + openEdges(p.I), 0) + parts.reduce((a, p) => a + (p.stuck || 0), 0);
   const chips = [`<span class="chip">${t('size')} <b>${R.W.toFixed(1)} × ${R.H.toFixed(1)} mm</b></span>`];
   if (R.mode !== 'svg') { chips.push(`<span class="chip">${t('thick')} <b>${(R.mode === 'hue' || R.mode === 'lit' ? R.total : th.tb + Math.max(th.ha, R.P.rim.length ? th.hr : 0)).toFixed(2)} mm</b></span>`, `<span class="chip">${t('parts')} <b>${parts.length}</b> (${parts.length} ${t('colors')})</span>`, `<span class="chip">${t('tris')} <b>${tris.toLocaleString()}</b></span>`, bad ? `<span class="chip warn">${t('open')}</span>` : `<span class="chip">${t('ok')}</span>`); }
+  if (R.box) chips.push(`<span class="chip">${t('boxSize')} <b>${R.box.Bw.toFixed(1)} × ${R.box.Bh.toFixed(1)} × ${R.box.depth.toFixed(1)} mm</b></span>`);
   if (R.thin) chips.push(`<span class="chip warn">${t('thin')}</span>`);
   $('chips').innerHTML = chips.join(''); setStatus('ready', 'ok'); S.openBad = bad; if (R.mode === 'hue') { renderHueList(); renderSel(); }
 }
@@ -998,10 +1244,18 @@ const slug = () => (S.mode === 'text' ? $('txt').value : S.srcName.replace(/\.[^
 async function exportZip() {
   const R = S.last; if (!R || !R.parts) return; $('bExp').disabled = true; setStatus('working');
   try {
-    const parts = R.parts, off = [128 - R.W / 2, 128 - R.H / 2, 0], te = new TextEncoder();
-    const inner = await zip(model3MF(parts, off), null);
-    const entries = [{ name: 'model.3mf', data: inner, store: true }];
-    parts.forEach((p, k) => entries.push({ name: `${k + 1}-${p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.stl`, data: stlBinary(p.V, p.I, off) }));
+    const parts = R.parts, off = [128 - (R.EW || R.W) / 2, 128 - (R.EH || R.H) / 2, 0], te = new TextEncoder();
+    const entries = [], slug2 = (p, k) => `${k + 1}-${p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+    if (R.mode === 'lit' && parts.length > 1) { // oggetti separati nello stesso 3MF, disposti sul piatto 256x256 senza sovrapporsi
+      const bb = parts.map((p) => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (let i = 0; i < p.V.length; i += 3) { x0 = Math.min(x0, p.V[i]); x1 = Math.max(x1, p.V[i]); y0 = Math.min(y0, p.V[i + 1]); y1 = Math.max(y1, p.V[i + 1]); } return { x0, y0, w: x1 - x0, h: y1 - y0 }; });
+      const gap = 6, maxW = 240; let cx = 0, cy = 0, rowH = 0, TW = 0; const pos = bb.map((q) => { if (cx > 0 && cx + q.w > maxW) { cx = 0; cy += rowH + gap; rowH = 0; } const r = { x: cx, y: cy }; cx += q.w + gap; rowH = Math.max(rowH, q.h); TW = Math.max(TW, cx - gap); return r; }); const TH = cy + rowH;
+      const ox = 128 - TW / 2, oy = 128 - TH / 2; S.fitsBed = TH <= 250 && TW <= 250;
+      entries.push({ name: 'model.3mf', data: await zip(model3MFObjects(parts, bb.map((q, k) => [ox + pos[k].x - q.x0, oy + pos[k].y - q.y0, 0])), null), store: true });
+      parts.forEach((p, k) => { const q = bb[k]; entries.push({ name: slug2(p, k) + '.stl', data: stlBinary(p.V, p.I, [128 - q.x0 - q.w / 2, 128 - q.y0 - q.h / 2, 0]) }); });
+    } else {
+      entries.push({ name: 'model.3mf', data: await zip(model3MF(parts, off), null), store: true });
+      parts.forEach((p, k) => entries.push({ name: slug2(p, k) + '.stl', data: stlBinary(p.V, p.I, off) }));
+    }
     entries.push({ name: LANG === 'it' ? 'LEGGIMI.txt' : 'README.txt', data: te.encode(R.mode === 'lit' ? litReadme(R) : R.mode === 'hue' ? hueReadme() : t('readme')) });
     await saveBlob(new Blob([await zip(entries, null)], { type: 'application/zip' }), `keychain-${slug()}.zip`); setStatus('saved', 'ok');
   } catch (e) { console.error(e); setStatus('imgErr', 'err'); }
@@ -1037,8 +1291,8 @@ async function buildSvg(R) {
 }
 
 /* ---------- interfaccia ---------- */
-const OUT = { size: ['oSize', ' mm', 0], pad: ['oPad', ' mm', 1], holeD: ['oHD', ' mm', 1], rimW: ['oRW', ' mm', 1], tBase: ['oTB', ' mm', 1], hArt: ['oHA', ' mm', 1], hRim: ['oHR', ' mm', 1], rBg: ['oBg', '', 0] };
-function outputs() { for (const k in OUT) $(OUT[k][0]).textContent = (+$(k).value).toFixed(OUT[k][2]) + OUT[k][1]; $('oHN').textContent = $('hueN').value; $('oTmin').textContent = $('tmin').value + ' mm'; $('oTmax').textContent = $('tmax').value + ' mm'; $('oLF').textContent = $('litFrame').value + ' mm'; $('oLG').textContent = $('litGamma').value; { const lh = +$('lh').value; $('oBL').textContent = $('baseL').value + ' (' + ($('baseL').value * lh).toFixed(2) + ' mm)'; $('oSL').textContent = $('stepL').value + ' (' + ($('stepL').value * lh).toFixed(2) + ' mm)'; }
+const OUT = { litZoom: ['oLZ', '%', 0], litPanX: ['oLX', '%', 0], litPanY: ['oLY', '%', 0], cylD: ['oCD', ' mm', 0], cylH: ['oCH', ' mm', 0], boxWall: ['oBW', ' mm', 1], boxLip: ['oBLp', ' mm', 1], boxClr: ['oBC', ' mm', 1], boxDepth: ['oBD', ' mm', 0], size: ['oSize', ' mm', 0], pad: ['oPad', ' mm', 1], holeD: ['oHD', ' mm', 1], rimW: ['oRW', ' mm', 1], tBase: ['oTB', ' mm', 1], hArt: ['oHA', ' mm', 1], hRim: ['oHR', ' mm', 1], rBg: ['oBg', '', 0] };
+function outputs() { for (const k in OUT) $(OUT[k][0]).textContent = (+$(k).value).toFixed(OUT[k][2]) + OUT[k][1]; $('oIc').textContent = $('icScale').value + '%'; $('oFit').textContent = $('fitW').value + ' mm'; $('size').disabled = $('cFit').checked; $('lTxt2').hidden = !$('cTwo').checked; $('lFit').hidden = !$('cFit').checked; $('oSm').textContent = ['0', '1', '2', '3', '4', '5'][+$('smooth').value] + ' / 5'; $('oHN').textContent = $('hueN').value; $('oTmin').textContent = $('tmin').value + ' mm'; $('oTmax').textContent = $('tmax').value + ' mm'; $('oLF').textContent = $('litFrame').value + ' mm'; $('oLG').textContent = $('litGamma').value; { const lh = +$('lh').value; $('oBL').textContent = $('baseL').value + ' (' + ($('baseL').value * lh).toFixed(2) + ' mm)'; $('oSL').textContent = $('stepL').value + ' (' + ($('stepL').value * lh).toFixed(2) + ' mm)'; }
   const v = S.v[S.mode]; if (S.mode !== 'text') { $('oW').textContent = v.w + ' mm'; $('oM').textContent = v.margin + ' mm'; $('oThr').textContent = v.thr + '%'; } }
 function segInit(id, cb) { $(id).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; [...$(id).children].forEach((x) => x.setAttribute('aria-pressed', x === b)); cb(b.dataset.v); }); }
 function syncControls() {
@@ -1047,7 +1301,8 @@ function syncControls() {
   $('secText').classList.toggle('on', m === 'text'); $('secImg').classList.toggle('on', m !== 'text'); $('secDetail').classList.toggle('on', m === 'img' || m === 'svg');
   $('box3d').style.display = m === 'svg' || m === 'hue' || m === 'lit' ? 'none' : 'flex'; $('ctlTitle').textContent = t(m === 'text' ? 'ctlText' : m === 'img' ? 'ctlImg' : m === 'hue' ? 'ctlHue' : m === 'lit' ? 'ctlLit' : 'ctlSvg');
   if (m !== 'text') { $('wmm').value = v.w; $('margin').value = v.margin; $('thr').value = v.thr; $('lThr').textContent = t(m === 'img' ? 'thrImg' : 'thrSvg'); $('hThr').textContent = t(m === 'img' ? 'hImg' : 'hSvg'); }
-  [...$('hole').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.v === v.hole)); $('boxHoleD').style.display = v.hole === 'none' ? 'none' : '';
+  const fm = $('litForm').value, cyl = m === 'lit' && fm === 'cyl', shp = m === 'lit' && fm !== 'plate', bxOn = m === 'lit' && $('litBox').checked && !cyl; $('cylBox').hidden = !cyl; $('litBoxRow').style.display = cyl ? 'none' : ''; $('litFrame').parentNode.style.display = cyl ? 'none' : ''; $('litFitRow').style.display = shp && !cyl ? '' : 'none'; $('zoomBox').style.display = shp ? '' : 'none'; $('boxOpt').style.display = cyl ? 'none' : ''; $('boxOpt').hidden = !$('litBox').checked; $('boxNote').hidden = !$('litBox').checked || fm !== 'plate'; $('lCable').hidden = !$('boxBack').checked; $('litShapeBox').style.display = bxOn || shp || cyl ? 'none' : ''; if (m === 'lit') { $('wmm').parentNode.style.display = cyl ? 'none' : ''; } else $('wmm').parentNode.style.display = ''; $('hole').parentNode.style.display = bxOn || shp || cyl ? 'none' : ''; $('smooth').parentNode.style.display = m === 'lit' ? 'none' : '';
+  [...$('hole').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.v === v.hole)); $('boxHoleD').style.display = v.hole === 'none' || bxOn || shp || cyl ? 'none' : '';
   $('expHint').textContent = t(m === 'svg' ? 'hintSvg' : 'hint3d'); $('bExp').style.display = m === 'svg' ? 'none' : ''; $('bSvg').className = m === 'svg' ? 'btn' : 'btn alt'; $('bPng').style.display = m === 'svg' ? '' : 'none'; $('rowZip').style.display = m === 'svg' ? '' : 'none'; $('boxSvgOpt').style.display = m === 'svg' ? '' : 'none'; $('hEng').textContent = t('hEng' + $('svgEng').value); $('bSvg').style.display = m === 'hue' || m === 'lit' ? 'none' : '';
   outputs();
 }
@@ -1061,24 +1316,29 @@ function snapshotDefaults() {
   DEF = { inputs: {}, v: JSON.parse(JSON.stringify(S.v)), shape: S.shape };
   document.querySelectorAll('#controls input[id], #controls select[id]').forEach((e) => { if (e.type === 'file' || ['cBg', 'cBgIn', 'rBg'].includes(e.id)) return; DEF.inputs[e.id] = e.type === 'checkbox' ? e.checked : e.value; });
 }
+function syncIcons() { [...$('iconGrid').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.k === S.icon)); [...$('iconPos').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === S.iconPos)); }
 function resetMode() {
   const m = S.mode; Object.keys(DEF.inputs).forEach((id) => { const e = $(id); if (e.type === 'checkbox') e.checked = DEF.inputs[id]; else e.value = DEF.inputs[id]; });
   S.v[m] = JSON.parse(JSON.stringify(DEF.v[m])); if (m === 'text') { S.shape = DEF.shape; [...$('shape').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.v === S.shape)); }
-  S.hue.n = +$('hueN').value; S.hue.key = ''; syncControls(); schedule();
+  S.hue.n = +$('hueN').value; S.hue.key = ''; if (m === 'text') { S.icon = 'heart'; S.iconPos = 'none'; syncIcons(); } syncControls(); schedule();
 }
 function init() {
   $('lang').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; LANG = b.dataset.l; applyLang(); });
   $('tabText').onclick = () => setMode('text'); $('tabImg').onclick = () => setMode('img'); $('tabSvg').onclick = () => setMode('svg'); $('tabHue').onclick = () => setMode('hue'); $('tabLit').onclick = () => setMode('lit');
-  ['tmin', 'tmax', 'litFrame', 'litGamma', 'litPitch'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); })); $('litInv').onchange = schedule;
+  ['tmin', 'tmax', 'litFrame', 'litGamma', 'litPitch', 'boxWall', 'boxLip', 'boxClr', 'boxDepth', 'cylD', 'cylH', 'litZoom', 'litPanX', 'litPanY'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); })); $('litInv').onchange = schedule; $('litBox').onchange = () => { syncControls(); schedule(); }; $('litForm').onchange = () => { $('litFit').checked = $('litForm').value === 'star'; syncControls(); schedule(); }; $('litFit').onchange = schedule; $('boxBack').onchange = $('boxCable').onchange = () => { syncControls(); schedule(); };
   segInit('litShape', (v) => { S.litShape = v; schedule(); }); segInit('litView', (v) => { S.litView = v; schedule(); });
   ['hueN', 'lh', 'baseL', 'stepL'].forEach((i) => $(i).addEventListener('input', () => { if (i === 'hueN') S.hue.n = +$('hueN').value; outputs(); schedule(); })); $('hueRev').onchange = schedule;
   segInit('shape', (v) => { S.shape = v; schedule(); }); segInit('hole', (v) => { S.v[S.mode].hole = v; syncControls(); schedule(); });
-  ['txt', 'font', 'size', 'pad', 'holeD', 'rimW', 'tBase', 'hArt', 'hRim', 'c1', 'c2', 'c3'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); }));
+  ['smooth', 'txt', 'font', 'size', 'pad', 'holeD', 'rimW', 'tBase', 'hArt', 'hRim', 'c1', 'c2', 'c3'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); }));
   [['wmm', 'w'], ['margin', 'margin'], ['thr', 'thr']].forEach(([id, k]) => $(id).addEventListener('input', () => { S.v[S.mode][k] = +$(id).value; outputs(); schedule(); }));
   $('bImg').onclick = () => $('fImg').click(); $('fImg').onchange = (e) => { const f = e.target.files[0]; if (f) loadImageFile(f); e.target.value = ''; };
   $('cBg').onchange = applyBg; $('cBgIn').onchange = applyBg; $('rBg').oninput = () => { outputs(); applyBg(); };
   $('bFont').onclick = () => $('fFont').click();
   $('fFont').onchange = async (e) => { const f = e.target.files[0]; if (!f) return; try { const ff = new FontFace('KCustom', await f.arrayBuffer()); await ff.load(); document.fonts.add(ff); let o = [...$('font').options].find((x) => x.value === 'KCustom|400'); if (!o) { o = new Option(f.name, 'KCustom|400'); $('font').add(o); } o.text = f.name; $('font').value = 'KCustom|400'; schedule(); } catch (_) { setStatus('imgErr', 'err'); } e.target.value = ''; };
+  const grid = $('iconGrid'); grid.className = 'icg';
+  Object.keys(ICONS).forEach((k) => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.k = k; bt.title = k; bt.setAttribute('aria-pressed', k === S.icon); const cv = iconCanvas(k, 40, '#888'); bt.append(cv); bt.onclick = () => { S.icon = k; if (S.iconPos === 'none') S.iconPos = 'left'; syncIcons(); schedule(); }; grid.append(bt); });
+  segInit('iconPos', (v) => { S.iconPos = v; schedule(); });
+  ['cTwo', 'cFit'].forEach((i) => { $(i).onchange = () => { outputs(); schedule(); }; }); ['txt2', 'icScale', 'fitW'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); }));
   $('bReset').onclick = resetMode;
   $('bHueReset').onclick = () => { S.hue.key = ''; schedule(); };
   $('bHueUndo').onclick = () => { if (S.hue.fix.length) { S.hue.fix.pop(); schedule(); } };
