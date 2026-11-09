@@ -83,6 +83,7 @@ button.sw.plus{background:var(--field);color:var(--ink);font-size:16px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
 /* ---- look moderno ---- */
+.htools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.htools .btn{flex:0 0 auto}
 body{background:var(--glow),var(--bg);background-attachment:fixed;font-feature-settings:'ss01'}
 h1{font-size:28px;font-weight:700;letter-spacing:-.025em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{font-size:14.5px}
@@ -118,7 +119,7 @@ input[type=range]{height:22px}
       <h1>Keychain Maker</h1>
       <p class="sub" data-i="sub"></p>
     </div>
-    <div class="lang" id="lang"><button data-l="en" aria-pressed="true">EN</button><button data-l="it" aria-pressed="false">IT</button></div>
+    <div class="htools"><button class="btn alt mini" id="bSave" data-i="saveProj"></button><button class="btn alt mini" id="bOpen" data-i="openProj"></button><input type="file" id="fProj" accept=".json,application/json" hidden><div class="lang" id="lang"><button data-l="en" aria-pressed="true">EN</button><button data-l="it" aria-pressed="false">IT</button></div></div>
   </header>
   <div class="tabs" role="tablist">
     <button role="tab" id="tabText" aria-selected="true" data-i="tabText"></button>
@@ -201,8 +202,8 @@ input[type=range]{height:22px}
         <div id="litShapeBox"><div class="hint" style="margin-bottom:5px" data-i="litShapeL"></div>
           <div class="seg" id="litShape"><button aria-pressed="true" data-v="cut" data-i="litCut"></button><button aria-pressed="false" data-v="rect" data-i="litRect"></button></div></div>
         <div class="row2">
-          <label for="tmin"><span data-i="tmin"></span><output id="oTmin"></output><input id="tmin" type="range" min="0.4" max="2" step="0.1" value="0.8"></label>
-          <label for="tmax"><span data-i="tmax"></span><output id="oTmax"></output><input id="tmax" type="range" min="1.5" max="5" step="0.1" value="3.2"></label>
+          <label for="tmin"><span data-i="tmin"></span><output id="oTmin"></output><input id="tmin" type="range" min="0.4" max="2" step="0.1" value="0.6"></label>
+          <label for="tmax"><span data-i="tmax"></span><output id="oTmax"></output><input id="tmax" type="range" min="1.5" max="5" step="0.1" value="2"></label>
         </div>
         <label for="litFrame"><span data-i="litFrame"></span><output id="oLF"></output><input id="litFrame" type="range" min="0" max="10" step="0.5" value="3"></label>
         <label for="litGamma"><span data-i="litGamma"></span><output id="oLG"></output><input id="litGamma" type="range" min="0.5" max="2" step="0.1" value="1"></label>
@@ -223,7 +224,12 @@ input[type=range]{height:22px}
             <label for="boxDepth"><span data-i="boxDepth"></span><output id="oBD"></output><input id="boxDepth" type="range" min="0" max="60" step="5" value="25"></label>
           </div>
           <label class="chk"><input type="checkbox" id="boxBack" checked><span data-i="boxBack"></span></label>
+                    <label for="lidClr" id="lidClrRow"><span data-i="lidClr"></span><output id="oLC"></output><input id="lidClr" type="range" min="0.1" max="0.8" step="0.05" value="0.35"></label>
           <label class="chk" id="lCable"><input type="checkbox" id="boxCable" checked><span data-i="boxCable"></span></label>
+          <div class="row2" id="cableSz">
+            <label for="cableW"><span data-i="cableW"></span><output id="oCW"></output><input id="cableW" type="range" min="3" max="30" step="1" value="9"></label>
+            <label for="cableH"><span data-i="cableH"></span><output id="oCHh"></output><input id="cableH" type="range" min="3" max="20" step="1" value="7"></label>
+          </div>
         </div>
         <p class="hint" data-i="litHint"></p>
       </div>
@@ -625,6 +631,9 @@ const TX = {
     cylReadme: 'CYLINDER (cup / lamp): the picture wraps around the whole circumference. Diameter %1 mm, height %2 mm.\nPrint the tube standing, white or light filament, 100% infill, thin layers (0.08-0.12 mm). The smooth side is the OUTSIDE, the relief is inside. The second part is the base: the tube slides over its collar. Put an LED tea-light inside.\n',
     litBoxNote: 'With the box the plate is a rectangle without ring hole, so it slides into the slot.',
     boxBack: 'Closed back (a cover behind the light chamber)', boxCable: 'Cable hole in the back',
+    cableW: 'Cable hole width', cableH: 'Cable hole height',
+    lidClr: 'Lid clearance (more = looser fit)',
+    saveProj: 'Save project', openProj: 'Open project', projSaved: 'Project saved.', projLoaded: 'Project loaded.', projErr: 'This file is not a Keychain Maker project.',
     litBox: 'Also make a holder box with a slot', boxWall: 'Box wall', boxLip: 'Front lip around the picture', boxClr: 'Clearance for the plate', boxDepth: 'Light chamber depth (0 = none)', boxSize: 'Box',
     sepNote: 'The 3MF holds every part as a separate object, laid out on the plate without overlapping: in your slicer you can select, move, or delete each one. The STL files are the same parts one by one.\n',
     boxReadme: 'HOLDER BOX (second part, auto-sized to the plate)\nOuter size: %1 x %2 x %3 mm. The slot is %4 mm wide and open on top: slide the plate in from above, relief side toward the light, smooth side toward the viewer.\nPrint it lying flat on its front face (the face with the window on the bed), 2-3 perimeters, 20% infill, any colour (dark colours hide the light spill best). Put a LED strip or a tea-light (LED) in the chamber; the closed back (with the cable hole) is part of the same print.\n',
@@ -671,6 +680,9 @@ const TX = {
     cylReadme: 'CILINDRO (tazza / lampada): l\'immagine avvolge tutta la circonferenza. Diametro %1 mm, altezza %2 mm.\nStampa il tubo in piedi, filamento bianco o chiaro, riempimento 100%, layer sottili (0,08-0,12 mm). Il lato liscio è l\'ESTERNO, il rilievo è dentro. Il secondo pezzo è la base: il tubo si infila sul suo collare. Dentro metti una candela LED.\n',
     litBoxNote: 'Con la scatola la piastra è un rettangolo, senza foro per l\'anello, così scivola nella scanalatura.',
     boxBack: 'Fondo chiuso (un coperchio dietro la camera della luce)', boxCable: 'Foro per il cavo sul fondo',
+    cableW: 'Larghezza foro cavo', cableH: 'Altezza foro cavo',
+    lidClr: 'Gioco del coperchio (più alto = più largo)',
+    saveProj: 'Salva progetto', openProj: 'Apri progetto', projSaved: 'Progetto salvato.', projLoaded: 'Progetto caricato.', projErr: 'Questo file non è un progetto di Keychain Maker.',
     litBox: 'Crea anche una scatola con scanalatura', boxWall: 'Spessore pareti scatola', boxLip: 'Bordo frontale attorno all\'immagine', boxClr: 'Gioco per la piastra', boxDepth: 'Profondità camera luce (0 = nessuna)', boxSize: 'Scatola',
     sepNote: 'Il 3MF contiene ogni pezzo come oggetto separato, già disposto sul piatto senza sovrapposizioni: nello slicer puoi selezionare, spostare o eliminare ciascuno. Gli STL sono gli stessi pezzi, uno per file.\n',
     boxReadme: 'SCATOLA PORTA-LITOFANIA (seconda parte, dimensionata sulla piastra)\nMisura esterna: %1 x %2 x %3 mm. La scanalatura è larga %4 mm e aperta in alto: infila la piastra dall\'alto, lato con il rilievo verso la luce, lato liscio verso chi guarda.\nStampala distesa sulla faccia frontale (quella con la finestra sul piatto), 2-3 perimetri, riempimento 20%, qualsiasi colore (i colori scuri trattengono meglio la luce). Nella camera metti una striscia LED o una candela LED; il fondo chiuso (con il foro per il cavo) è già nella stessa stampa.\n',
@@ -984,8 +996,8 @@ function shapedHolder(base, w, h, p, ppm, tmax, dx) {
   let lid = null;
   if (dep > 0 && $('boxBack').checked) { // coperchio con tappo che entra nell'alloggio + bordo che appoggia e impedisce di cadere dentro
     const nm = new Uint8Array(w * h);
-    if ($('boxCable').checked) { let bx0 = w, bx1 = 0, by0 = h, by1 = 0; for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (pocket[j * w + i]) { if (i < bx0) bx0 = i; if (i > bx1) bx1 = i; if (j < by0) by0 = j; if (j > by1) by1 = j; } const cx = Math.round((bx0 + bx1) / 2), cy = Math.round(by1 - (by1 - by0) / 3), hw = 4.5 * ppm, hh = 3.5 * ppm; for (let j = Math.floor(cy - hh); j <= Math.ceil(cy + hh); j++) for (let i = Math.floor(cx - hw); i <= Math.ceil(cx + hw); i++) if (j >= 0 && j < h && i >= 0 && i < w) nm[j * w + i] = 1; }
-    const plug = sub(erode(pocket, w, h, 0.25 * ppm), nm), flange = sub(erode(outer, w, h, 0.4 * ppm), nm), pl = Math.min(4, dep);
+    if ($('boxCable').checked) { let bx0 = w, bx1 = 0, by0 = h, by1 = 0; for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (pocket[j * w + i]) { if (i < bx0) bx0 = i; if (i > bx1) bx1 = i; if (j < by0) by0 = j; if (j > by1) by1 = j; } const cx = Math.round((bx0 + bx1) / 2), cy = Math.round(by1 - (by1 - by0) / 3), hw = Math.min(val('cableW') / 2, (bx1 - bx0) / ppm * 0.4) * ppm, hh = Math.min(val('cableH') / 2, (by1 - by0) / ppm * 0.25) * ppm; for (let j = Math.floor(cy - hh); j <= Math.ceil(cy + hh); j++) for (let i = Math.floor(cx - hw); i <= Math.ceil(cx + hw); i++) if (j >= 0 && j < h && i >= 0 && i < w) nm[j * w + i] = 1; }
+    const plug = sub(erode(pocket, w, h, val('lidClr') * ppm), nm), flange = sub(erode(outer, w, h, 0.4 * ppm), nm), pl = Math.min(4, dep);
     lid = mergeExt([[polys(flange), 0, 1.6], [polys(plug), 1.6, 1.6 + pl]], Hh); placeAt(lid, dx + dim.w + 10, 0);
   }
   return { sh, lid, Bw: dim.w, Bh: dim.h, depth: f + ringT, slot: d, shape: true };
@@ -1016,7 +1028,7 @@ function holderBox(W, H, tmax) {
   const frame = { outer: rc(0, 0, Bw, Bh), holes: [win] };
   const U = { outer: [[0, 0], [wall, 0], [wall, Bh - wall], [Bw - wall, Bh - wall], [Bw - wall, 0], [Bw, 0], [Bw, Bh], [0, Bh]], holes: [] };
   const ring = { outer: rc(0, 0, Bw, Bh), holes: [rc(wall, wall, Bw - wall, Bh - wall)] };
-  const layers = [[[frame], 0, f], [[U], f, f + d], [[frame], f + d, 2 * f + d]]; if (dep > 0) { layers.push([[ring], 2 * f + d, 2 * f + d + dep]); if ($('boxBack').checked) { const cx = Bw / 2, cw = 4.5, back = { outer: rc(0, 0, Bw, Bh), holes: $('boxCable').checked ? [rc(cx - cw, Bh - wall - 8, cx + cw, Bh - wall - 2)] : [] }; layers.push([[back], 2 * f + d + dep, 2 * f + d + dep + f]); } }
+  const layers = [[[frame], 0, f], [[U], f, f + d], [[frame], f + d, 2 * f + d]]; if (dep > 0) { layers.push([[ring], 2 * f + d, 2 * f + d + dep]); if ($('boxBack').checked) { const cx = Bw / 2, cw = Math.min(val('cableW') / 2, Bw * 0.4), ch = Math.min(val('cableH'), (Bh - 2 * wall) * 0.6), back = { outer: rc(0, 0, Bw, Bh), holes: $('boxCable').checked ? [rc(cx - cw, Bh - wall - 2 - ch, cx + cw, Bh - wall - 2)] : [] }; layers.push([[back], 2 * f + d + dep, 2 * f + d + dep + f]); } }
   const V = [], I = []; let stuck = 0;
   layers.forEach(([pl, z0, z1]) => { const m = extrude(pl, Bh, z0, z1), o = V.length / 3; for (let k = 0; k < m.V.length; k++) V.push(m.V[k]); for (let k = 0; k < m.I.length; k++) I.push(m.I[k] + o); stuck += m.stuck || 0; });
   return { V: Float32Array.from(V), I: Uint32Array.from(I), stuck, Bw, Bh, depth: 2 * f + d + Math.max(0, dep) + (dep > 0 && $('boxBack').checked ? f : 0), slot: d };
@@ -1028,7 +1040,7 @@ function computeLit() {
   const hi = holeInfo(), Ro = (hi.d / 2 + hi.wall) * ppm, hole = !plateF || boxOn ? 'none' : v.hole;
   const gw = Math.round(v.w * ppm), gh = plateF ? Math.max(2, Math.round(gw * S.src.height / S.src.width)) : Math.round(gw * LIT_ASPECT[form]), P = Math.ceil((fw + (hole === 'none' ? 0 : hi.d + 2 * hi.wall) + 2 + (!plateF && boxOn ? val('boxWall') + val('boxClr') + 1 : 0)) * ppm) + 2, w = gw + 2 * P, h = gh + 2 * P;
   const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d', { willReadFrequently: true }); x.imageSmoothingQuality = 'high'; const shp0 = plateF ? null : litShapeMask(form, gw, gh);
-  if (plateF) x.drawImage(S.src, P, P, gw, gh); else { const zm = val('litZoom') / 100, ox = val('litPanX') / 100 * gw, oy = val('litPanY') / 100 * gh, sc = Math.max(gw / S.src.width, gh / S.src.height); const r = $('litFit').checked ? fitRectIn(shp0, gw, gh, S.src.width / S.src.height) : { x: (gw - S.src.width * sc) / 2, y: (gh - S.src.height * sc) / 2, w: S.src.width * sc, h: S.src.height * sc }; const w2 = r.w * zm, h2 = r.h * zm; x.save(); x.beginPath(); x.rect(P, P, gw, gh); x.clip(); x.drawImage(S.src, P + r.x + r.w / 2 + ox - w2 / 2, P + r.y + r.h / 2 + oy - h2 / 2, w2, h2); x.restore(); }
+  if (plateF) { const zm = val('litZoom') / 100, w2 = gw * zm, h2 = gh * zm; x.save(); x.beginPath(); x.rect(P, P, gw, gh); x.clip(); x.drawImage(S.src, P + gw / 2 + val('litPanX') / 100 * gw - w2 / 2, P + gh / 2 + val('litPanY') / 100 * gh - h2 / 2, w2, h2); x.restore(); } else { const zm = val('litZoom') / 100, ox = val('litPanX') / 100 * gw, oy = val('litPanY') / 100 * gh, sc = Math.max(gw / S.src.width, gh / S.src.height); const r = $('litFit').checked ? fitRectIn(shp0, gw, gh, S.src.width / S.src.height) : { x: (gw - S.src.width * sc) / 2, y: (gh - S.src.height * sc) / 2, w: S.src.width * sc, h: S.src.height * sc }; const w2 = r.w * zm, h2 = r.h * zm; x.save(); x.beginPath(); x.rect(P, P, gw, gh); x.clip(); x.drawImage(S.src, P + r.x + r.w / 2 + ox - w2 / 2, P + r.y + r.h / 2 + oy - h2 / 2, w2, h2); x.restore(); }
   const d = x.getImageData(0, 0, w, h).data, shp = shp0, inRect = (i, j) => i >= P && i < P + gw && j >= P && j < P + gh;
   const content = new Uint8Array(w * h), bg = new Uint8Array(w * h), lum = new Float32Array(w * h);
   for (let j = P; j < P + gh; j++) for (let i = P; i < P + gw; i++) { const k = j * w + i, a = d[4 * k + 3] / 255, l = (0.299 * d[4 * k] + 0.587 * d[4 * k + 1] + 0.114 * d[4 * k + 2]) / 255; lum[k] = a * l + (1 - a); content[k] = shp ? shp[(j - P) * gw + (i - P)] : 1; }
@@ -1291,7 +1303,7 @@ async function buildSvg(R) {
 }
 
 /* ---------- interfaccia ---------- */
-const OUT = { litZoom: ['oLZ', '%', 0], litPanX: ['oLX', '%', 0], litPanY: ['oLY', '%', 0], cylD: ['oCD', ' mm', 0], cylH: ['oCH', ' mm', 0], boxWall: ['oBW', ' mm', 1], boxLip: ['oBLp', ' mm', 1], boxClr: ['oBC', ' mm', 1], boxDepth: ['oBD', ' mm', 0], size: ['oSize', ' mm', 0], pad: ['oPad', ' mm', 1], holeD: ['oHD', ' mm', 1], rimW: ['oRW', ' mm', 1], tBase: ['oTB', ' mm', 1], hArt: ['oHA', ' mm', 1], hRim: ['oHR', ' mm', 1], rBg: ['oBg', '', 0] };
+const OUT = { lidClr: ['oLC', ' mm', 2], cableW: ['oCW', ' mm', 0], cableH: ['oCHh', ' mm', 0], litZoom: ['oLZ', '%', 0], litPanX: ['oLX', '%', 0], litPanY: ['oLY', '%', 0], cylD: ['oCD', ' mm', 0], cylH: ['oCH', ' mm', 0], boxWall: ['oBW', ' mm', 1], boxLip: ['oBLp', ' mm', 1], boxClr: ['oBC', ' mm', 1], boxDepth: ['oBD', ' mm', 0], size: ['oSize', ' mm', 0], pad: ['oPad', ' mm', 1], holeD: ['oHD', ' mm', 1], rimW: ['oRW', ' mm', 1], tBase: ['oTB', ' mm', 1], hArt: ['oHA', ' mm', 1], hRim: ['oHR', ' mm', 1], rBg: ['oBg', '', 0] };
 function outputs() { for (const k in OUT) $(OUT[k][0]).textContent = (+$(k).value).toFixed(OUT[k][2]) + OUT[k][1]; $('oIc').textContent = $('icScale').value + '%'; $('oFit').textContent = $('fitW').value + ' mm'; $('size').disabled = $('cFit').checked; $('lTxt2').hidden = !$('cTwo').checked; $('lFit').hidden = !$('cFit').checked; $('oSm').textContent = ['0', '1', '2', '3', '4', '5'][+$('smooth').value] + ' / 5'; $('oHN').textContent = $('hueN').value; $('oTmin').textContent = $('tmin').value + ' mm'; $('oTmax').textContent = $('tmax').value + ' mm'; $('oLF').textContent = $('litFrame').value + ' mm'; $('oLG').textContent = $('litGamma').value; { const lh = +$('lh').value; $('oBL').textContent = $('baseL').value + ' (' + ($('baseL').value * lh).toFixed(2) + ' mm)'; $('oSL').textContent = $('stepL').value + ' (' + ($('stepL').value * lh).toFixed(2) + ' mm)'; }
   const v = S.v[S.mode]; if (S.mode !== 'text') { $('oW').textContent = v.w + ' mm'; $('oM').textContent = v.margin + ' mm'; $('oThr').textContent = v.thr + '%'; } }
 function segInit(id, cb) { $(id).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; [...$(id).children].forEach((x) => x.setAttribute('aria-pressed', x === b)); cb(b.dataset.v); }); }
@@ -1301,7 +1313,7 @@ function syncControls() {
   $('secText').classList.toggle('on', m === 'text'); $('secImg').classList.toggle('on', m !== 'text'); $('secDetail').classList.toggle('on', m === 'img' || m === 'svg');
   $('box3d').style.display = m === 'svg' || m === 'hue' || m === 'lit' ? 'none' : 'flex'; $('ctlTitle').textContent = t(m === 'text' ? 'ctlText' : m === 'img' ? 'ctlImg' : m === 'hue' ? 'ctlHue' : m === 'lit' ? 'ctlLit' : 'ctlSvg');
   if (m !== 'text') { $('wmm').value = v.w; $('margin').value = v.margin; $('thr').value = v.thr; $('lThr').textContent = t(m === 'img' ? 'thrImg' : 'thrSvg'); $('hThr').textContent = t(m === 'img' ? 'hImg' : 'hSvg'); }
-  const fm = $('litForm').value, cyl = m === 'lit' && fm === 'cyl', shp = m === 'lit' && fm !== 'plate', bxOn = m === 'lit' && $('litBox').checked && !cyl; $('cylBox').hidden = !cyl; $('litBoxRow').style.display = cyl ? 'none' : ''; $('litFrame').parentNode.style.display = cyl ? 'none' : ''; $('litFitRow').style.display = shp && !cyl ? '' : 'none'; $('zoomBox').style.display = shp ? '' : 'none'; $('boxOpt').style.display = cyl ? 'none' : ''; $('boxOpt').hidden = !$('litBox').checked; $('boxNote').hidden = !$('litBox').checked || fm !== 'plate'; $('lCable').hidden = !$('boxBack').checked; $('litShapeBox').style.display = bxOn || shp || cyl ? 'none' : ''; if (m === 'lit') { $('wmm').parentNode.style.display = cyl ? 'none' : ''; } else $('wmm').parentNode.style.display = ''; $('hole').parentNode.style.display = bxOn || shp || cyl ? 'none' : ''; $('smooth').parentNode.style.display = m === 'lit' ? 'none' : '';
+  const fm = $('litForm').value, cyl = m === 'lit' && fm === 'cyl', shp = m === 'lit' && fm !== 'plate', bxOn = m === 'lit' && $('litBox').checked && !cyl; $('cylBox').hidden = !cyl; $('litBoxRow').style.display = cyl ? 'none' : ''; $('litFrame').parentNode.style.display = cyl ? 'none' : ''; $('litFitRow').style.display = shp && !cyl ? '' : 'none'; $('zoomBox').style.display = m === 'lit' ? '' : 'none'; $('boxOpt').style.display = cyl ? 'none' : ''; $('boxOpt').hidden = !$('litBox').checked; $('boxNote').hidden = !$('litBox').checked || fm !== 'plate'; $('lCable').hidden = !$('boxBack').checked; $('lidClrRow').style.display = $('boxBack').checked ? '' : 'none'; $('cableSz').style.display = $('boxBack').checked && $('boxCable').checked ? '' : 'none'; $('litShapeBox').style.display = bxOn || shp || cyl ? 'none' : ''; if (m === 'lit') { $('wmm').parentNode.style.display = cyl ? 'none' : ''; } else $('wmm').parentNode.style.display = ''; $('hole').parentNode.style.display = bxOn || shp || cyl ? 'none' : ''; $('smooth').parentNode.style.display = m === 'lit' ? 'none' : '';
   [...$('hole').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.v === v.hole)); $('boxHoleD').style.display = v.hole === 'none' || bxOn || shp || cyl ? 'none' : '';
   $('expHint').textContent = t(m === 'svg' ? 'hintSvg' : 'hint3d'); $('bExp').style.display = m === 'svg' ? 'none' : ''; $('bSvg').className = m === 'svg' ? 'btn' : 'btn alt'; $('bPng').style.display = m === 'svg' ? '' : 'none'; $('rowZip').style.display = m === 'svg' ? '' : 'none'; $('boxSvgOpt').style.display = m === 'svg' ? '' : 'none'; $('hEng').textContent = t('hEng' + $('svgEng').value); $('bSvg').style.display = m === 'hue' || m === 'lit' ? 'none' : '';
   outputs();
@@ -1311,6 +1323,37 @@ function applyLang() {
   [...$('lang').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.l === LANG)); syncControls(); if (S.last) update();
 }
 function setMode(m) { S.mode = m; syncControls(); schedule(); }
+
+/* ---------- salva / carica progetto + impostazioni ricordate ---------- */
+const NOSAVE = ['cBg', 'cBgIn', 'rBg'];
+function collectState(withImg) {
+  const inputs = {}; document.querySelectorAll('#controls input[id], #controls select[id]').forEach((e) => { if (e.type === 'file') return; inputs[e.id] = e.type === 'checkbox' ? e.checked : e.value; });
+  const H = S.hue, st = { app: 'keychain-maker', ver: 1, mode: S.mode, lang: LANG, inputs, v: S.v, shape: S.shape, litShape: S.litShape, litView: S.litView, icon: S.icon, iconPos: S.iconPos, srcName: S.srcName, hue: { n: H.n, hex: H.hex, order: H.order, removed: [...H.removed], fix: H.fix, rev: H.rev } };
+  if (withImg && S.raw) { try { st.img = S.raw.toDataURL('image/png'); } catch (_) { } }
+  return st;
+}
+function syncSegs() {
+  const pr = (id, val) => [...$(id).children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.v === val));
+  pr('shape', S.shape); pr('litShape', S.litShape); pr('litView', S.litView); pr('iconPos', S.iconPos); syncIcons();
+}
+function applyState(st, withImg) {
+  if (!st || st.app !== 'keychain-maker') throw new Error('bad');
+  Object.keys(st.inputs || {}).forEach((id) => { const e = $(id); if (!e || e.type === 'file') return; const val = st.inputs[id]; if (e.type === 'checkbox') e.checked = !!val; else if (e.tagName !== 'SELECT' || [...e.options].some((o) => o.value === String(val))) e.value = val; });
+  Object.keys(st.v || {}).forEach((k) => { if (S.v[k]) Object.assign(S.v[k], st.v[k]); });
+  ['shape', 'litShape', 'litView', 'icon', 'iconPos'].forEach((k) => { if (st[k]) S[k] = st[k]; });
+  if (st.mode && ['text', 'img', 'svg', 'hue', 'lit'].includes(st.mode)) S.mode = st.mode;
+  if (st.lang && (st.lang === 'en' || st.lang === 'it')) LANG = st.lang;
+  S.hue.n = +$('hueN').value;
+  const restoreHue = () => { const H = S.hue, s = st.hue; if (!s || !s.hex || !s.hex.length) return; H.key = H.ver + '|' + H.n; H.hex = s.hex; H.lab = s.hex.map(hex2lab); H.order = s.order; H.removed = new Set(s.removed || []); H.fix = s.fix || []; H.rev = !!s.rev; H.sel = null; $('hueRev').checked = H.rev; };
+  const fin = () => { syncSegs(); applyLang(); outputs(); schedule(); };
+  if (withImg && st.img) { const im = new Image(); im.onload = () => { const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; c.getContext('2d').drawImage(im, 0, 0); S.raw = c; S.srcName = st.srcName || 'project'; $('bgNote').hidden = true; applyBg(); restoreHue(); fin(); setStatus('projLoaded', 'ok'); }; im.src = st.img; }
+  else fin();
+}
+async function saveProject() { const st = collectState(true); await saveBlob(new Blob([JSON.stringify(st)], { type: 'application/json' }), slug() + '.kcproject.json'); setStatus('projSaved', 'ok'); }
+function openProject(file) { const r = new FileReader(); r.onload = () => { try { applyState(JSON.parse(r.result), true); } catch (_) { setStatus('projErr', 'err'); } }; r.readAsText(file); }
+let memT = 0;
+function rememberSoon() { clearTimeout(memT); memT = setTimeout(() => { try { localStorage.setItem('kcSettings', JSON.stringify(collectState(false))); } catch (_) { } }, 600); }
+function restoreRemembered() { try { const s = localStorage.getItem('kcSettings'); if (s) applyState(JSON.parse(s), false); } catch (_) { } }
 let DEF = null;
 function snapshotDefaults() {
   DEF = { inputs: {}, v: JSON.parse(JSON.stringify(S.v)), shape: S.shape };
@@ -1325,7 +1368,7 @@ function resetMode() {
 function init() {
   $('lang').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; LANG = b.dataset.l; applyLang(); });
   $('tabText').onclick = () => setMode('text'); $('tabImg').onclick = () => setMode('img'); $('tabSvg').onclick = () => setMode('svg'); $('tabHue').onclick = () => setMode('hue'); $('tabLit').onclick = () => setMode('lit');
-  ['tmin', 'tmax', 'litFrame', 'litGamma', 'litPitch', 'boxWall', 'boxLip', 'boxClr', 'boxDepth', 'cylD', 'cylH', 'litZoom', 'litPanX', 'litPanY'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); })); $('litInv').onchange = schedule; $('litBox').onchange = () => { syncControls(); schedule(); }; $('litForm').onchange = () => { $('litFit').checked = $('litForm').value === 'star'; syncControls(); schedule(); }; $('litFit').onchange = schedule; $('boxBack').onchange = $('boxCable').onchange = () => { syncControls(); schedule(); };
+  ['tmin', 'tmax', 'litFrame', 'litGamma', 'litPitch', 'boxWall', 'boxLip', 'boxClr', 'boxDepth', 'cylD', 'cylH', 'litZoom', 'litPanX', 'litPanY', 'cableW', 'cableH', 'lidClr'].forEach((i) => $(i).addEventListener('input', () => { outputs(); schedule(); })); $('litInv').onchange = schedule; $('litBox').onchange = () => { syncControls(); schedule(); }; $('litForm').onchange = () => { $('litFit').checked = $('litForm').value === 'star'; syncControls(); schedule(); }; $('litFit').onchange = schedule; $('boxBack').onchange = $('boxCable').onchange = () => { syncControls(); schedule(); };
   segInit('litShape', (v) => { S.litShape = v; schedule(); }); segInit('litView', (v) => { S.litView = v; schedule(); });
   ['hueN', 'lh', 'baseL', 'stepL'].forEach((i) => $(i).addEventListener('input', () => { if (i === 'hueN') S.hue.n = +$('hueN').value; outputs(); schedule(); })); $('hueRev').onchange = schedule;
   segInit('shape', (v) => { S.shape = v; schedule(); }); segInit('hole', (v) => { S.v[S.mode].hole = v; syncControls(); schedule(); });
@@ -1344,7 +1387,7 @@ function init() {
   $('bHueUndo').onclick = () => { if (S.hue.fix.length) { S.hue.fix.pop(); schedule(); } };
   $('bExp').onclick = exportZip; $('bPng').onclick = exportPng; $('bZip').onclick = exportSvgZip; $('svgEng').onchange = () => { $('hEng').textContent = t('hEng' + $('svgEng').value); if (S.last && S.last.mode === 'svg') preview(S.last, []); }; $('bSvg').onclick = exportSvg;
   setSource(sampleCanvas(), 'sample (cat)'); $('cBg').checked = false; $('bgBox').hidden = true; $('bgNote').hidden = true; applyBg();
-  snapshotDefaults(); window.KC = S; applyLang(); schedule();
+  snapshotDefaults(); restoreRemembered(); $('bSave').onclick = saveProject; $('bOpen').onclick = () => $('fProj').click(); $('fProj').onchange = (e) => { const f = e.target.files[0]; if (f) openProject(f); e.target.value = ''; }; document.addEventListener('input', rememberSoon); document.addEventListener('click', rememberSoon); window.KC = S; applyLang(); schedule();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
 }
 init();
